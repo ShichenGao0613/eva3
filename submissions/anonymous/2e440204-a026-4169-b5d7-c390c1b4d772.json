@@ -1,0 +1,28 @@
+{
+  "submissionId": "2e440204-a026-4169-b5d7-c390c1b4d772",
+  "createdAt": "2025-09-09T17:52:59.044Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    16
+  ],
+  "responses": [
+    {
+      "chartId": 16,
+      "insightA": "The bar chart depicts a distribution of weights, with the highest concentration around the 2,500 weight range, followed by a gradual decline towards higher weight bins.\n\nThe distribution seems skewed to the right, suggesting a larger frequency of lighter weights and fewer instances of higher weights.\n\nThe statistical data shows a mean weight of approximately 3,259, with a standard deviation of 1,011, indicating a diverse range of weights. The median is 3,250, confirming the skew observed in the chart.\n\nBoth the visual and statistical data confirm a right-skewed distribution in weights, with the most common occurrences around the 2,500 range and a gradual decrease as weights increase.\n\nThe data highlights a prevalent pattern where lighter weights are more frequent, peaking around 2,500 and tapering off with heavier categories.",
+      "ratingA": 3,
+      "insightB": "The CSV file contains information about weight bins and their corresponding counts. Here’s a summary of the data:\n\n| Weight Bin | Count |\n|------------|-------|\n| 1600       | 2     |\n| 1700       | 5     |\n| 1800       | 8     |\n| 1900       | 23    |\n| 2000       | 15    |\n| ...        | ...   |\n\n### Insights:\n\n- The chart shows the distribution of weight categories with intervals of 1,000.\n- The most frequent category is **2,000–3,000**, which matches the highest point on the histogram, confirming a peak in that range in the CSV data.\n- As weight increases beyond 3,000, there is a decrease in frequency, as depicted in both the graph and the data.\n\nThe histogram and the CSV data jointly illustrate a typical distribution pattern, starting with a low frequency in the lower weights, peaking in the mid-range, and decreasing again in the higher weights.",
+      "ratingB": 3,
+      "reason": "ddd",
+      "_swapped": false,
+      "durationMs": 0,
+      "firstViewAtISO": null,
+      "completedAtISO": "2025-09-09T17:52:59.044Z"
+    }
+  ],
+  "prolific": {
+    "pid": "",
+    "studyId": "",
+    "sessionId": ""
+  }
+}

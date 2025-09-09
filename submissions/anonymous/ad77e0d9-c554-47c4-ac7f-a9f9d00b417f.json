@@ -1,0 +1,28 @@
+{
+  "submissionId": "ad77e0d9-c554-47c4-ac7f-a9f9d00b417f",
+  "createdAt": "2025-09-09T17:47:35.309Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    49
+  ],
+  "responses": [
+    {
+      "chartId": 49,
+      "insightA": "The scatter plot shows the distribution of maximum acceleration against the number of cylinders. As the number of cylinders increases, there is a noticeable increase in maximum acceleration, particularly for 4 to 8 cylinders.\n\nA visual inspection indicates that vehicles with higher cylinder counts tend to have higher maximum acceleration values. Notably, the data points are sparser for lower cylinder counts.\n\nIn the CSV data analysis, the averages of maximum acceleration for 4, 5, 6, and 8 cylinders are each relatively high, but exact relationships and patterns need precise calculations.\n\nCombining the visual and statistical findings, there is a clear trend associating higher cylinder counts with higher maximum acceleration, although the dataset is limited.\n\nHigher cylinder numbers are generally associated with higher maximum acceleration, as supported by both the chart and CSV data.",
+      "ratingA": 4,
+      "insightB": "### Insights:\n- **Max acceleration:** 24.8 for 4 cylinders\n- **Lowest acceleration:** 13.5 for 3 cylinders\n- Generally, fewer cylinders tend to show higher max acceleration, except for 3 cylinders.",
+      "ratingB": 4,
+      "reason": "dd",
+      "_swapped": false,
+      "durationMs": 0,
+      "firstViewAtISO": null,
+      "completedAtISO": "2025-09-09T17:47:35.309Z"
+    }
+  ],
+  "prolific": {
+    "pid": "",
+    "studyId": "",
+    "sessionId": ""
+  }
+}

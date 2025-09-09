@@ -1,8 +1,8 @@
 {
-  "submissionId": "b56fd232-49be-4fa7-bc88-e7b96566c0fd",
-  "createdAt": "2025-09-09T14:09:17.243Z",
+  "submissionId": "713b1ba9-f534-4823-a763-1ff0c7d3f15a",
+  "createdAt": "2025-09-09T17:59:00.750Z",
   "timezone": "America/New_York",
-  "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.61(0x18003d39) NetType/WIFI Language/zh_CN",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
   "selectedCharts": [
     42
   ],
@@ -10,11 +10,19 @@
     {
       "chartId": 42,
       "insightA": "The line chart depicts fluctuating trends in the number of courses for Fall and Spring between 2005 and 2010, with notable peaks and troughs, particularly around the year 2008.\n\nVisually, both Fall and Spring show variability without a clear consistent upward or downward trend, but significant spikes appear around 2006 to 2008.\n\nThe statistical analysis reveals that the average number of courses for Fall is approximately 5.17 with a standard deviation of 2.48, while Spring courses average at 5.33 with a standard deviation of 2.34.\n\nIntegrating the visual observations with the statistical analysis indicates that while both semesters have similar average course counts, variability suggests periods of expansion or contraction likely impacted by specific events or decisions.\n\nCourse offerings in Fall and Spring between 2005 and 2010 show considerable variability with similar averages but distinct patterns may indicate responsiveness to contextual factors.",
-      "ratingA": 5,
+      "ratingA": 4,
       "insightB": "The CSV file contains data about the number of courses offered each semester from 2005 to 2010. Here's a brief overview:\n\n- **Columns**:\n  - `year`: The year the data represents.\n  - `count_star()`: The number of courses.\n  - `semester`: The semester (Fall or Spring).\n\nLet's analyze the trend of the number of courses in Fall and Spring over these years using the provided data and the image.Here's the analysis based on the chart and CSV data:\n\n- **Fall Semester:**\n  - The number of courses in the Fall showed fluctuation over the years.\n  - There was significant growth from 2005 to 2006, peaking in 2006.\n  - A sharp decline occurred in 2008, reaching the lowest in that year.\n\n- **Spring Semester:**\n  - The number of courses in the Spring increased steadily from 2005 to 2008.\n  - A steep drop was observed in 2009.\n  - The number recovered slightly by 2010.\n\nOverall, both semesters experienced variability, with notable peaks and valleys. While Fall saw a sharper fluctuation in 2008, Spring had a more gradual initial rise but a sharp drop in 2009.",
       "ratingB": 4,
-      "reason": "",
-      "_swapped": true
+      "reason": "sss",
+      "_swapped": false,
+      "durationMs": 0,
+      "firstViewAtISO": null,
+      "completedAtISO": "2025-09-09T17:59:00.750Z"
     }
-  ]
+  ],
+  "prolific": {
+    "pid": "",
+    "studyId": "",
+    "sessionId": ""
+  }
 }
