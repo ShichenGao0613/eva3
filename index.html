@@ -27,7 +27,7 @@
       width: 100%;
       max-width: 320px; /* << smaller than before; tweak if needed */
       max-height: 500px;
-      height: auto;
+      height: 100%;
       border-radius: 12px;
       display: block;
       margin: 0 auto;
@@ -214,16 +214,17 @@
 
             // Reason input (English-only)
             h(Box, { sx: { mt: 2 } },
-              h(TextField, {
-                label: 'Why did you choose this? (optional)',
-                placeholder: 'Write your reasoning (e.g., which insight is clearer, better supported, more persuasive, etc.)',
-                value: it.reason || '',
-                onChange: (e) => handleReason(e.target.value),
-                multiline: true,
-                minRows: 2,
-                fullWidth: true,
-                disabled: it.submitted
-              })
+h(TextField, {
+  label: 'Please explain the reasons behind your rating (1-5) for Insight A and Insight B,\nwhich are machine-generated data insights based on the given chart.',
+  placeholder: 'Write your reasoning (e.g., which insight is clearer, better supported, more persuasive, etc.)',
+  value: it.reason || '',
+  onChange: (e) => handleReason(e.target.value),
+  multiline: true,
+  minRows: 2,
+  fullWidth: true,
+  disabled: it.submitted,
+  InputLabelProps: { style: { whiteSpace: 'pre-line' } }  
+})
             )
           ),
           h(CardActions, { sx: { justifyContent: 'space-between' } },
