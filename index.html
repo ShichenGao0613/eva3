@@ -218,13 +218,7 @@
         function mdBoldToHtml(s) {
           if (!s) return "";
           const escaped = escapeHtml(String(s));
-          // Convert **text** to <strong>text</strong>; keeps trailing ':' unbolded, e.g. **Correlation**:
-          const withBold = escaped.replace(
-            /\*\*([^*]+)\*\*/g,
-            "<strong>$1<\/strong>"
-          );
-          // Preserve line breaks like Typography's pre-line
-          return withBold.replace(/\n/g, "<br/>");
+          return escaped.replace(/(^|\n)\s*#{3}\s*/g, "$1").replace(/\*\*/g, "").replace(/\n/g, "<br/>");
         }
         // Stable child component to avoid remounting (prevents input jumping)
         function CurrentCard({
@@ -278,7 +272,7 @@
                         h(Typography, {
                           variant: "body2",
                           sx: { mb: 1, wordBreak: "break-word" },
-                          color: "text.secondary",
+                          color: "text.primary",
                           dangerouslySetInnerHTML: {
                             __html: mdBoldToHtml(it.displayA),
                           },
@@ -318,7 +312,7 @@
                         h(Typography, {
                           variant: "body2",
                           sx: { mb: 1, wordBreak: "break-word" },
-                          color: "text.secondary",
+                          color: "text.primary",
                           dangerouslySetInnerHTML: {
                             __html: mdBoldToHtml(it.displayB),
                           },
