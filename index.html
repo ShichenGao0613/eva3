@@ -235,11 +235,6 @@ h(TextField, {
             ),
             h(Stack, { direction: 'row', spacing: 1 },
               h(Button, { variant: 'outlined', onClick: () => history.back(), sx:{ display:'none' } }, 'Back (hidden)'),
-              h(Button, {
-                variant: 'outlined',
-                onClick: () => window.appHandlePrev && window.appHandlePrev(),
-                disabled: currentIndex === 0
-              }, 'Previous'),
               h(Tooltip, { title: (!it.ratingA || !it.ratingB) ? 'Rate both A and B to submit' : (it.submitted ? 'Already submitted' : '') },
                 h(Box, null,
                   h(Button, {
