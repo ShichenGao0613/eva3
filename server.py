@@ -5,27 +5,25 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/submit": {"origins": "*"}}, supports_credentials=False)
+CORS(
+    app,
+    resources={r"/submit": {"origins": "*"}},
+    supports_credentials=False,
+    allow_headers=["Content-Type", "ngrok-skip-browser-warning"],
+    methods=["POST", "OPTIONS"],  
+    max_age=86400,               
+)
 
 os.makedirs("submissions", exist_ok=True)
 
-@app.route("/submit", methods=["POST", "OPTIONS"])
+@app.route("/submit", methods=["POST"])
 def submit():
-    
-    if request.method == "OPTIONS":
-        resp = app.make_response(("", 204))
-        resp.headers["Access-Control-Allow-Methods"] = "POST, OPTIONS"
-       
-        resp.headers["Access-Control-Allow-Headers"] = "Content-Type, ngrok-skip-browser-warning"
-        return resp
-
     data = request.get_json(silent=True) or {}
     if not isinstance(data, dict):
         return jsonify({"ok": False, "error": "invalid JSON"}), 400
 
     sub_id = data.get("submissionId") or datetime.utcnow().strftime("noid-%Y%m%dT%H%M%S")
     path = os.path.join("submissions", f"{sub_id}.json")
-
 
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
