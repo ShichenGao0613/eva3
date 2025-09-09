@@ -215,11 +215,15 @@
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#39;");
         }
+
         function mdBoldToHtml(s) {
-          if (!s) return "";
-          const escaped = escapeHtml(String(s));
-          return escaped.replace(/(^|\n)\s*#{3}\s*/g, "$1").replace(/\*\*/g, "").replace(/\n/g, "<br/>");
-        }
+  if (!s) return "";
+  const escaped = escapeHtml(String(s));
+  return escaped
+    .replace(/(^|\n)\s*#+\s*/g, "$1") 
+    .replace(/\*\*/g, "") 
+    .replace(/\n/g, "<br/>");
+}
         // Stable child component to avoid remounting (prevents input jumping)
         function CurrentCard({
           items,
@@ -460,6 +464,9 @@
               createTheme({
                 palette: { mode: "light" },
                 shape: { borderRadius: 16 },
+                      typography: {
+        fontSize: 17, 
+      },
               }),
             []
           );
