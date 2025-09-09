@@ -22,10 +22,10 @@
 
   <style>
     html, body, #root { height: 100%; margin: 0; }
-    /* Smaller chart image and centered */
+    /* Make the chart much smaller & centered */
     img.chart {
       width: 100%;
-      max-width: 760px; /* adjust this number to make the chart smaller/larger */
+      max-width: 420px; /* << smaller than before; tweak if needed */
       height: auto;
       border-radius: 12px;
       display: block;
@@ -33,6 +33,7 @@
       background: #f5f5f5;
     }
     .sticky-footer { position: sticky; bottom: 0; z-index: 10; background: rgba(255,255,255,0.9); backdrop-filter: blur(6px); }
+    #root strong { font-weight: 700; }
   </style>
 </head>
 <body>
@@ -44,7 +45,7 @@
   const {
     ThemeProvider, createTheme, CssBaseline, Container, Box, Typography, Grid,
     Card, CardHeader, CardContent, CardActions, Button, Rating, LinearProgress,
-    Stack, Divider, Chip, Snackbar, Alert, Tooltip
+    Stack, Divider, Chip, Snackbar, Alert, Tooltip, TextField
   } = MaterialUI;
 
   // ========= CONFIG =========
@@ -59,12 +60,176 @@
 
   // Randomly sample k from [1..n]
   function randSample(n, k) {
-    const arr = Array.from({length: n}, (_, i) => i + 1); // 1..n
+    const arr = Array.from({length: n}, (_, i) => i); // 1..n
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr.slice(0, k);
+  }
+
+  // Remove specific section labels from the ORIGINAL insightA text only
+  function escapeRegExp(s){ return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+function cleanInsightA(text) {
+  if (!text) return '';
+  let out = String(text).replace(/\r\n?/g, '\n');
+
+  const LABELS = [
+    'Observation of the Chart',
+    'Visual Trend Analysis',
+    'Statistical Analysis Summary',
+    'Integrated Findings',
+    'Overall Insight Summary'
+  ];
+
+  const NEED_LEADING_NL = new Set([
+    'Visual Trend Analysis',
+    'Statistical Analysis Summary',
+    'Integrated Findings',
+    'Overall Insight Summary'
+  ]);
+
+  // 1) Normalize each label to `Label:\n` and add a leading newline
+  //    ONLY for the 4 specified labels (works even if labels are mid-line).
+  for (const label of LABELS) {
+    const before = NEED_LEADING_NL.has(label) ? '\n' : '';
+    const re = new RegExp(`\\s*"?${escapeRegExp(label)}"?\\s*:\\s*`, 'gi');
+    out = out.replace(re, `${before}${label}:\n`);
+  }
+
+  // 2) Remove the label lines.
+  //    - For the 4 labels, keep exactly ONE newline before their value.
+  //    - For "Observation of the Chart", keep none.
+  for (const label of LABELS) {
+    const keep = NEED_LEADING_NL.has(label) ? '\n' : '';
+    const re = new RegExp(`(^|\\n)\\s*${escapeRegExp(label)}\\s*:\\s*\\n`, 'g'); // global; line starts handled via (^|\n)
+    out = out.replace(re, `$1${keep}`);
+  }
+
+  // 3) Strip surrounding quotes from each line BUT keep empty lines.
+  out = out
+    .split('\n')
+    .map(line => {
+      let t = line.trimEnd();              // keep leading empties intact
+      t = t.replace(/,\s*$/, '');          // drop trailing comma
+      t = t.replace(/^[“"]+/, '').replace(/[”"]+$/, '');
+      t = t.trim().replace(/^"(.+)"$/, '$1').replace(/^“(.+)”$/, '$1');
+      return t;
+    })
+    .join('\n');
+
+  // 4) Collapse 3+ newlines to exactly two (i.e., one blank line),
+  //    and trim leading/trailing newlines.
+  out = out.replace(/\n{3,}/g, '\n\n').replace(/^\n+|\n+$/g, '');
+
+  return out;
+}
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  function mdBoldToHtml(s) {
+    if (!s) return '';
+    const escaped = escapeHtml(String(s));
+    // Convert **text** to <strong>text</strong>; keeps trailing ':' unbolded, e.g. **Correlation**:
+    const withBold = escaped.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    // Preserve line breaks like Typography's pre-line
+    return withBold.replace(/\n/g, '<br/>');
+  }
+
+  // Stable child component to avoid remounting (prevents input jumping)
+  function CurrentCard({ items, currentIndex, handleRate, handleReason }) {
+    const it = items[currentIndex];
+    if (!it) return null;
+    const displayNumber = currentIndex + 1;
+    return h(Grid, { container: true, spacing: 3 },
+      h(Grid, { item: true, xs: 12, md: 10 },
+        h(Card, null,
+          h(CardHeader, { title: `Chart #${displayNumber}`, subheader: `Item ${displayNumber} of ${items.length} · Rate A and B, then use Next/Previous below.` }),
+          h(CardContent, null,
+            h(Box, { sx: { mb: 2 } },
+              h('img', {
+                className: 'chart', src: it.imgUrl, alt: `Chart ${displayNumber}`, loading: 'lazy',
+                onError: (e) => { e.currentTarget.style.opacity = 0.2; }
+              })
+            ),
+
+            // Side-by-side layout for Insight A and B
+            h(Grid, { container: true, spacing: 2, alignItems: 'stretch' },
+              h(Grid, { item: true, xs: 12, md: 5 },
+                h(Stack, { spacing: 1 },
+                  h(Typography, { variant: 'subtitle2' }, 'Insight A'),
+                  // Render **bold** if present (avoids confusion when A/B are swapped)
+                  h(Typography, {
+                    variant: 'body2',
+                    sx: { mb: 1, wordBreak: 'break-word' },
+                    color: 'text.secondary',
+                    dangerouslySetInnerHTML: { __html: mdBoldToHtml(it.insightA) }
+                  }),
+                  h(Rating, {
+                    name: `ratingA-${displayNumber}`,
+                    value: it.ratingA || 0,
+                    onChange: (_, v) => handleRate('ratingA', v || 0)
+                  })
+                )
+              ),
+
+              // VS for desktop (hidden on mobile)
+              h(Grid, { item: true, xs: 12, md: 2, sx: { display: { xs: 'none', md: 'flex' }, alignItems: 'center', justifyContent: 'center' } },
+                h(Chip, { label: 'VS' })
+              ),
+
+              h(Grid, { item: true, xs: 12, md: 5 },
+                h(Stack, { spacing: 1 },
+                  h(Typography, { variant: 'subtitle2' }, 'Insight B'),
+                  // Render Markdown **bold** in Insight B
+                  h(Typography, {
+                    variant: 'body2',
+                    sx: { mb: 1, wordBreak: 'break-word' },
+                    color: 'text.secondary',
+                    dangerouslySetInnerHTML: { __html: mdBoldToHtml(it.insightB) }
+                  }),
+                  h(Rating, {
+                    name: `ratingB-${displayNumber}`,
+                    value: it.ratingB || 0,
+                    onChange: (_, v) => handleRate('ratingB', v || 0)
+                  })
+                )
+              )
+            ),
+
+            // VS for mobile (between stacked sections)
+            h(Box, { sx: { display: { xs: 'block', md: 'none' }, my: 1 } },
+              h(Divider, null, h(Chip, { label: 'VS' }))
+            ),
+
+            // Reason input (English-only)
+            h(Box, { sx: { mt: 2 } },
+              h(TextField, {
+                label: 'Why did you choose this? (optional)',
+                placeholder: 'Write your reasoning (e.g., which insight is clearer, better supported, more persuasive, etc.)',
+                value: it.reason || '',
+                onChange: (e) => handleReason(e.target.value),
+                multiline: true,
+                minRows: 2,
+                fullWidth: true
+              })
+            )
+          ),
+          h(CardActions, { sx: { justifyContent: 'space-between' } },
+            h(Typography, { variant: 'caption', color: 'text.secondary' },
+              (it.ratingA && it.ratingB) ? `Rated: A=${it.ratingA} · B=${it.ratingB}` : 'Please rate both A and B'
+            ),
+            h(Typography, { variant: 'caption', color: 'text.secondary' }, `#${displayNumber}`)
+          )
+        )
+      )
+    );
   }
 
   function useInsights() {
@@ -103,8 +268,7 @@
     const { loading, error, rows } = useInsights();
 
     const [items, setItems] = useState([]);
-    const [currentIndex, setCurrentIndex] = useState(0); // index of the currently displayed chart
-    const [completed, setCompleted] = useState(false);   // all charts rated (auto-complete)
+    const [currentIndex, setCurrentIndex] = useState(0); // index of the currently displayed chart (1..10 shown to user)
 
     const [submitting, setSubmitting] = useState(false);
     const [snackbar, setSnackbar] = useState(null);
@@ -119,18 +283,30 @@
         const map = new Map(rows.map(r => [r.id, r]));
         const picked = ids.map(id => {
           const rec = map.get(id) || { insightA: `Insight A for #${id}`, insightB: `Insight B for #${id}` };
+
+          // Clean ORIGINAL A only, then (optionally) swap A and B for display
+          const originalA = cleanInsightA(rec.insightA);
+          const originalB = String(rec.insightB);
+
+          let displayA = originalA;
+          let displayB = originalB;
+          if (Math.random() < 0.5) {
+            // Randomly swap A/B order (hidden from users)
+            [displayA, displayB] = [displayB, displayA];
+          }
+
           return {
-            id,
+            id, // underlying chart id (NOT shown to users)
             imgUrl: `${CHART_DIR}/${id}.svg`,
-            insightA: rec.insightA,
-            insightB: rec.insightB,
+            insightA: displayA,
+            insightB: displayB,
             ratingA: null,
-            ratingB: null
+            ratingB: null,
+            reason: '' // user free-text reason per chart
           };
         });
         setItems(picked);
         setCurrentIndex(0);
-        setCompleted(false);
       }
     }, [loading, error, rows]);
 
@@ -151,28 +327,19 @@
       });
     }
 
-    // Manual navigation
-    function handlePrev() {
-      setCurrentIndex(i => Math.max(0, i - 1));
-    }
-    function handleNext() {
-      setCurrentIndex(i => Math.min(items.length - 1, i + 1));
+    // Reason input for current item
+    function handleReason(value) {
+      setItems(prev => {
+        const copy = prev.slice();
+        const curr = { ...copy[currentIndex], reason: value };
+        copy[currentIndex] = curr;
+        return copy;
+      });
     }
 
-    // Auto-advance when both A & B are rated
-    useEffect(() => {
-      if (!items.length || completed) return;
-      const curr = items[currentIndex];
-      if (curr && curr.ratingA && curr.ratingB) {
-        if (currentIndex < items.length - 1) {
-          const t = setTimeout(() => setCurrentIndex(i => i + 1), 250);
-          return () => clearTimeout(t);
-        } else {
-          const t = setTimeout(() => setCompleted(true), 250);
-          return () => clearTimeout(t);
-        }
-      }
-    }, [items, currentIndex, completed]);
+    // Manual navigation only (auto-advance REMOVED)
+    function handlePrev() { setCurrentIndex(i => Math.max(0, i - 1)); }
+    function handleNext() { setCurrentIndex(i => Math.min(items.length - 1, i + 1)); }
 
     async function handleSubmit() {
       if (!allRated) return;
@@ -188,7 +355,8 @@
           insightA: it.insightA,
           ratingA: it.ratingA,
           insightB: it.insightB,
-          ratingB: it.ratingB
+          ratingB: it.ratingB,
+          reason: it.reason
         }))
       };
 
@@ -206,98 +374,25 @@
         setSnackbar({ severity: 'success', msg: 'Thanks! Your ratings were submitted.' });
       } catch (e) {
         console.warn(e);
-        setSnackbar({ severity: 'warning', msg: 'Could not reach server. Check SUBMIT_URL.' });
+        setSnackbar({ severity: 'warning', msg: 'Could not reach the server. Please check SUBMIT_URL.' });
       } finally {
         setSubmitting(false);
       }
     }
 
     // ======= UI =======
-    const CurrentCard = () => {
-      const it = items[currentIndex];
-      if (!it) return null;
-      return h(Grid, { container: true, spacing: 3 },
-        h(Grid, { item: true, xs: 12, md: 10 },
-          h(Card, null,
-            h(CardHeader, { title: `Chart #${it.id}`, subheader: `Item ${currentIndex + 1} of ${items.length} (rate A and B)` }),
-            h(CardContent, null,
-              h(Box, { sx: { mb: 2 } },
-                h('img', {
-                  className: 'chart', src: it.imgUrl, alt: `Chart ${it.id}`, loading: 'lazy',
-                  onError: (e) => { e.currentTarget.style.opacity = 0.2; }
-                })
-              ),
-
-              // Side-by-side layout for Insight A and B
-              h(Grid, { container: true, spacing: 2, alignItems: 'stretch' },
-                h(Grid, { item: true, xs: 12, md: 5 },
-                  h(Stack, { spacing: 1 },
-                    h(Typography, { variant: 'subtitle2' }, 'Insight A'),
-                    h(Typography, { variant: 'body2', sx: { mb: 1, whiteSpace: 'pre-line', wordBreak: 'break-word' }, color: 'text.secondary' }, it.insightA),
-                    h(Rating, {
-                      name: `ratingA-${it.id}`,
-                      value: it.ratingA || 0,
-                      onChange: (_, v) => handleRate('ratingA', v || 0)
-                    })
-                  )
-                ),
-
-                // VS for desktop (hidden on mobile)
-                h(Grid, { item: true, xs: 12, md: 2, sx: { display: { xs: 'none', md: 'flex' }, alignItems: 'center', justifyContent: 'center' } },
-                  h(Chip, { label: 'VS' })
-                ),
-
-                h(Grid, { item: true, xs: 12, md: 5 },
-                  h(Stack, { spacing: 1 },
-                    h(Typography, { variant: 'subtitle2' }, 'Insight B'),
-                    h(Typography, { variant: 'body2', sx: { mb: 1, whiteSpace: 'pre-line', wordBreak: 'break-word' }, color: 'text.secondary' }, it.insightB),
-                    h(Rating, {
-                      name: `ratingB-${it.id}`,
-                      value: it.ratingB || 0,
-                      onChange: (_, v) => handleRate('ratingB', v || 0)
-                    })
-                  )
-                )
-              ),
-
-              // VS for mobile (between stacked sections)
-              h(Box, { sx: { display: { xs: 'block', md: 'none' }, my: 1 } },
-                h(Divider, null, h(Chip, { label: 'VS' }))
-              )
-            ),
-            h(CardActions, { sx: { justifyContent: 'space-between' } },
-              h(Typography, { variant: 'caption', color: 'text.secondary' },
-                (it.ratingA && it.ratingB) ? `Rated: A=${it.ratingA} · B=${it.ratingB} (next chart will appear)` : 'Please rate both A and B'
-              ),
-              h(Typography, { variant: 'caption', color: 'text.secondary' }, `#${it.id}`)
-            )
-          )
-        )
-      );
-    };
-
-    const DoneCard = () => (
-      h(Grid, { container: true, spacing: 3 },
-        h(Grid, { item: true, xs: 12, md: 10 },
-          h(Card, null,
-            h(CardHeader, { title: 'All done 🎉', subheader: 'You can now submit your 10 ratings.' }),
-            h(CardContent, null,
-              h(Typography, { variant: 'body1', sx: { mb: 1 } }, 'Click Submit below to send your responses.'),
-              h(Typography, { variant: 'body2', color: 'text.secondary' }, 'You can also use your browser back/forward history to review previous items before submitting.')
-            )
-          )
-        )
-      )
-    );
+    // (Removed inline CurrentCard; now defined at module scope to keep identity stable)
+    // (Prevents remount on every keystroke and fixes input jumping)
+    
 
     return h(ThemeProvider, { theme },
       h(CssBaseline, null),
-      h(Container, { maxWidth: 'xl', sx: { py: 4 } }, // wider overall UI
+      h(Container, { maxWidth: 'lg', sx: { py: 4 } }, // slightly narrower overall UI
         h(Stack, { spacing: 2 },
           h(Box, null,
             h(Typography, { variant: 'h4', sx: { fontWeight: 700 } }, 'Chart Insights Rating'),
             h(Typography, { variant: 'subtitle1', color: 'text.secondary' },
-              'Only one chart is shown at a time. After you rate Insight A and Insight B, the next chart will automatically appear.'
+              'One chart at a time. Rate Insight A and Insight B, then use the Next / Previous buttons to navigate.'
             )
           ),
 
@@ -305,19 +400,23 @@
           (error) && h(Alert, { severity: 'error' }, String(error)),
 
           (!loading && !error && items.length > 0) && h(Box, null,
-            h(Box, { className: 'sticky-footer', sx: { py: 1, mb: 2 } },
+            h(CurrentCard, { items, currentIndex, handleRate, handleReason }),
+
+            // Bottom controls (sticky at page bottom): Next / Previous and Submit
+            h(Box, { className: 'sticky-footer', sx: { py: 1, mt: 2 } },
               h(Stack, { direction: 'row', alignItems: 'center', spacing: 2 },
                 h(Box, { sx: { flex: 1 } },
                   h(LinearProgress, { variant: 'determinate', value: progress }),
                   h(Typography, { variant: 'caption', color: 'text.secondary' }, `${progress}% complete`)
                 ),
 
-                // New Previous / Next buttons
+                // Bottom navigation buttons
                 h(Stack, { direction: 'row', spacing: 1 },
                   h(Button, { variant: 'outlined', onClick: handlePrev, disabled: currentIndex === 0 }, 'Previous'),
                   h(Button, { variant: 'outlined', onClick: handleNext, disabled: currentIndex >= items.length - 1 }, 'Next')
                 ),
 
+                // Submit remains on the right, enabled only when all rated
                 h(Tooltip, { title: SUBMIT_URL.includes('YOUR-NGROK-SUBDOMAIN') ? 'Configure SUBMIT_URL to enable server submission' : '' },
                   h(Box, null,
                     h(Button, { variant: 'contained', disabled: !allRated || submitting, onClick: handleSubmit },
@@ -326,9 +425,7 @@
                   )
                 )
               )
-            ),
-
-            completed ? h(DoneCard, null) : h(CurrentCard, null)
+            )
           )
         ),
         h(Snackbar, {
