@@ -470,31 +470,39 @@
         const prevIndexRef = React.useRef(null);
 
         // 当前题目变化时：对上一个题目“停表并累计”，对新题“开表”
-        useEffect(() => {
-          setItems((prev) => {
-            if (!prev.length) return prev;
-            const copy = prev.slice();
-            const now = performance.now();
+useEffect(() => {
+  setItems(prev => {
+    if (!prev.length) return prev;
+    const copy = prev.slice();
+    const cur = copy[currentIndex];
 
-            // 离开上一题：清空它的“本次打开起点”
-            const prevIdx = prevIndexRef.current;
-            if (prevIdx !== null && copy[prevIdx]) {
-              copy[prevIdx] = { ...copy[prevIdx], lastViewStart: null };
-            }
-
-            // 进入当前题：未提交就重置“本次打开起点”
-            const cur = copy[currentIndex];
-            if (cur && !cur.submitted) {
-              copy[currentIndex] = {
-                ...cur,
-                lastViewStart: now, // 本次打开的起点（高分辨率、单调）
-                firstViewAtISO: new Date().toISOString(), // 这里改为“本次打开”的 ISO 时间
-              };
-            }
-            return copy;
-          });
-          prevIndexRef.current = currentIndex;
-        }, [currentIndex]);
+    if (cur && !cur.submitted && cur.firstOpenPerf == null) {
+      copy[currentIndex] = {
+        ...cur,
+        firstOpenPerf: performance.now(),
+        firstViewAtISO: cur.firstViewAtISO || new Date().toISOString(),
+      };
+    }
+    return copy;
+  });
+  prevIndexRef.current = currentIndex;
+}, [currentIndex]);
+useEffect(() => {
+  if (!loading && !error && items.length) {
+    setItems(prev => {
+      const copy = prev.slice();
+      const first = copy[0];
+      if (first && !first.submitted && first.firstOpenPerf == null) {
+        copy[0] = {
+          ...first,
+          firstOpenPerf: performance.now(),
+          firstViewAtISO: new Date().toISOString(),
+        };
+      }
+      return copy;
+    });
+  }
+}, [loading, error, items.length]);
         // Initialize selection
         useEffect(() => {
           if (!loading && !error && rows.length) {
@@ -539,7 +547,7 @@
                 reason: "", // user free-text reason per chart
                 submitted: false, // per-item submit state
 
-                lastViewStart: null,
+                firstOpenPerf: null, 
                 firstViewAtISO: null,
                 completedAtISO: null,
               };
@@ -609,11 +617,9 @@
           }
 
           // >>> 新增：提交前最后一次“停表并累计”
-          const nowPerf = performance.now();
-          const durationMs =
-            it.lastViewStart != null
-              ? Math.round(nowPerf - it.lastViewStart)
-              : 0;
+ const durationMs = it.firstOpenPerf != null
+  ? Math.round(performance.now() - it.firstOpenPerf)
+  : 0;
           const completedAtISO = new Date().toISOString();
 
           const mapped = mapRatingsToOriginal(it);

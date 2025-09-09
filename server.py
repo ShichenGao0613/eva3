@@ -33,12 +33,19 @@ def submit():
     prolific = data.get("prolific") or {}
     pid = sanitize(prolific.get("pid"), "anonymous")  
     sid = sanitize(prolific.get("sessionId") or data.get("submissionId") or datetime.utcnow().strftime("noid-%Y%m%dT%H%M%S"))
-
+    submission_id = sanitize(data.get("submissionId")) or datetime.utcnow().strftime("noid-%Y%m%dT%H%M%S")
+   
+    try:
+        chart_id = (data.get("responses") or [{}])[0].get("chartId")
+    except Exception:
+        chart_id = None
+    chart_id = sanitize(chart_id if chart_id is not None else "unknown")
 
     part_dir = os.path.join(BASE_DIR, pid)
     os.makedirs(part_dir, exist_ok=True)
+    path = os.path.join(part_dir, f"{submission_id}__chart-{chart_id}.json")
 
-    path = os.path.join(part_dir, f"{sid}.json")
+   
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
