@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Chart Insights Rating (Sequential)</title>
+  <title>Chart Insights Rating (Per-Item Submit)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- React & ReactDOM (UMD) -->
@@ -25,7 +25,8 @@
     /* Make the chart much smaller & centered */
     img.chart {
       width: 100%;
-      max-width: 420px; /* << smaller than before; tweak if needed */
+      max-width: 320px; /* << smaller than before; tweak if needed */
+      max-height: 500px;
       height: auto;
       border-radius: 12px;
       display: block;
@@ -69,62 +70,63 @@
   }
 
   // Remove specific section labels from the ORIGINAL insightA text only
-  function escapeRegExp(s){ return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function escapeRegExp(s){ return String(s).replace(/[.*+?^${}()|[\\]\\]/g, '\\$&'); }
 
-function cleanInsightA(text) {
-  if (!text) return '';
-  let out = String(text).replace(/\r\n?/g, '\n');
+  function cleanInsightA(text) {
+    if (!text) return '';
+    let out = String(text).replace(/\r\n?/g, '\n');
 
-  const LABELS = [
-    'Observation of the Chart',
-    'Visual Trend Analysis',
-    'Statistical Analysis Summary',
-    'Integrated Findings',
-    'Overall Insight Summary'
-  ];
+    const LABELS = [
+      'Observation of the Chart',
+      'Visual Trend Analysis',
+      'Statistical Analysis Summary',
+      'Integrated Findings',
+      'Overall Insight Summary'
+    ];
 
-  const NEED_LEADING_NL = new Set([
-    'Visual Trend Analysis',
-    'Statistical Analysis Summary',
-    'Integrated Findings',
-    'Overall Insight Summary'
-  ]);
+    const NEED_LEADING_NL = new Set([
+      'Visual Trend Analysis',
+      'Statistical Analysis Summary',
+      'Integrated Findings',
+      'Overall Insight Summary'
+    ]);
 
-  // 1) Normalize each label to `Label:\n` and add a leading newline
-  //    ONLY for the 4 specified labels (works even if labels are mid-line).
-  for (const label of LABELS) {
-    const before = NEED_LEADING_NL.has(label) ? '\n' : '';
-    const re = new RegExp(`\\s*"?${escapeRegExp(label)}"?\\s*:\\s*`, 'gi');
-    out = out.replace(re, `${before}${label}:\n`);
+    // 1) Normalize each label to `Label:\n` and add a leading newline
+    //    ONLY for the 4 specified labels (works even if labels are mid-line).
+    for (const label of LABELS) {
+      const before = NEED_LEADING_NL.has(label) ? '\n' : '';
+      const re = new RegExp(`\\s*"?${escapeRegExp(label)}"?\\s*:\\s*`, 'gi');
+      out = out.replace(re, `${before}${label}:\n`);
+    }
+
+    // 2) Remove the label lines.
+    //    - For the 4 labels, keep exactly ONE newline before their value.
+    //    - For "Observation of the Chart", keep none.
+    for (const label of LABELS) {
+      const keep = NEED_LEADING_NL.has(label) ? '\n' : '';
+      const re = new RegExp(`(^|\\n)\\s*${escapeRegExp(label)}\\s*:\\s*\\n`, 'g');
+      out = out.replace(re, `$1${keep}`);
+    }
+
+    // 3) Strip surrounding quotes from each line BUT keep empty lines.
+    out = out
+      .split('\n')
+      .map(line => {
+        let t = line.trimEnd();              // keep leading empties intact
+        t = t.replace(/,\s*$/, '');          // drop trailing comma
+        t = t.replace(/^[“"]+/, '').replace(/[”"]+$/, '');
+        t = t.trim().replace(/^"(.+)"$/, '$1').replace(/^“(.+)”$/, '$1');
+        return t;
+      })
+      .join('\n');
+
+    // 4) Collapse 3+ newlines to exactly two (i.e., one blank line),
+    //    and trim leading/trailing newlines.
+    out = out.replace(/\n{3,}/g, '\n\n').replace(/^\n+|\n+$/g, '');
+
+    return out;
   }
 
-  // 2) Remove the label lines.
-  //    - For the 4 labels, keep exactly ONE newline before their value.
-  //    - For "Observation of the Chart", keep none.
-  for (const label of LABELS) {
-    const keep = NEED_LEADING_NL.has(label) ? '\n' : '';
-    const re = new RegExp(`(^|\\n)\\s*${escapeRegExp(label)}\\s*:\\s*\\n`, 'g'); // global; line starts handled via (^|\n)
-    out = out.replace(re, `$1${keep}`);
-  }
-
-  // 3) Strip surrounding quotes from each line BUT keep empty lines.
-  out = out
-    .split('\n')
-    .map(line => {
-      let t = line.trimEnd();              // keep leading empties intact
-      t = t.replace(/,\s*$/, '');          // drop trailing comma
-      t = t.replace(/^[“"]+/, '').replace(/[”"]+$/, '');
-      t = t.trim().replace(/^"(.+)"$/, '$1').replace(/^“(.+)”$/, '$1');
-      return t;
-    })
-    .join('\n');
-
-  // 4) Collapse 3+ newlines to exactly two (i.e., one blank line),
-  //    and trim leading/trailing newlines.
-  out = out.replace(/\n{3,}/g, '\n\n').replace(/^\n+|\n+$/g, '');
-
-  return out;
-}
   function escapeHtml(s) {
     return String(s)
       .replace(/&/g, '&amp;')
@@ -137,20 +139,20 @@ function cleanInsightA(text) {
     if (!s) return '';
     const escaped = escapeHtml(String(s));
     // Convert **text** to <strong>text</strong>; keeps trailing ':' unbolded, e.g. **Correlation**:
-    const withBold = escaped.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    const withBold = escaped.replace(/\*\*([^*]+)\*\*/g, '<strong>$1<\/strong>');
     // Preserve line breaks like Typography's pre-line
     return withBold.replace(/\n/g, '<br/>');
   }
 
   // Stable child component to avoid remounting (prevents input jumping)
-  function CurrentCard({ items, currentIndex, handleRate, handleReason }) {
+  function CurrentCard({ items, currentIndex, handleRate, handleReason, handleSubmitCurrent, submitting }) {
     const it = items[currentIndex];
     if (!it) return null;
     const displayNumber = currentIndex + 1;
     return h(Grid, { container: true, spacing: 3 },
       h(Grid, { item: true, xs: 12, md: 10 },
         h(Card, null,
-          h(CardHeader, { title: `Chart #${displayNumber}`, subheader: `Item ${displayNumber} of ${items.length} · Rate A and B, then use Next/Previous below.` }),
+          h(CardHeader, { title: `Chart `, subheader: `Item ${displayNumber} of ${items.length} · Rate A and B, then Submit.` }),
           h(CardContent, null,
             h(Box, { sx: { mb: 2 } },
               h('img', {
@@ -169,12 +171,13 @@ function cleanInsightA(text) {
                     variant: 'body2',
                     sx: { mb: 1, wordBreak: 'break-word' },
                     color: 'text.secondary',
-                    dangerouslySetInnerHTML: { __html: mdBoldToHtml(it.insightA) }
+                    dangerouslySetInnerHTML: { __html: mdBoldToHtml(it.displayA) }
                   }),
                   h(Rating, {
                     name: `ratingA-${displayNumber}`,
                     value: it.ratingA || 0,
-                    onChange: (_, v) => handleRate('ratingA', v || 0)
+                    onChange: (_, v) => handleRate('ratingA', v || 0),
+                    disabled: it.submitted
                   })
                 )
               ),
@@ -192,12 +195,13 @@ function cleanInsightA(text) {
                     variant: 'body2',
                     sx: { mb: 1, wordBreak: 'break-word' },
                     color: 'text.secondary',
-                    dangerouslySetInnerHTML: { __html: mdBoldToHtml(it.insightB) }
+                    dangerouslySetInnerHTML: { __html: mdBoldToHtml(it.displayB) }
                   }),
                   h(Rating, {
                     name: `ratingB-${displayNumber}`,
                     value: it.ratingB || 0,
-                    onChange: (_, v) => handleRate('ratingB', v || 0)
+                    onChange: (_, v) => handleRate('ratingB', v || 0),
+                    disabled: it.submitted
                   })
                 )
               )
@@ -217,15 +221,34 @@ function cleanInsightA(text) {
                 onChange: (e) => handleReason(e.target.value),
                 multiline: true,
                 minRows: 2,
-                fullWidth: true
+                fullWidth: true,
+                disabled: it.submitted
               })
             )
           ),
           h(CardActions, { sx: { justifyContent: 'space-between' } },
             h(Typography, { variant: 'caption', color: 'text.secondary' },
-              (it.ratingA && it.ratingB) ? `Rated: A=${it.ratingA} · B=${it.ratingB}` : 'Please rate both A and B'
+              it.submitted
+                ? `Submitted: A=${it.ratingA} · B=${it.ratingB}`
+                : (it.ratingA && it.ratingB) ? `Ready to submit: A=${it.ratingA} · B=${it.ratingB}` : 'Please rate both A and B'
             ),
-            h(Typography, { variant: 'caption', color: 'text.secondary' }, `#${displayNumber}`)
+            h(Stack, { direction: 'row', spacing: 1 },
+              h(Button, { variant: 'outlined', onClick: () => history.back(), sx:{ display:'none' } }, 'Back (hidden)'),
+              h(Button, {
+                variant: 'outlined',
+                onClick: () => window.appHandlePrev && window.appHandlePrev(),
+                disabled: currentIndex === 0
+              }, 'Previous'),
+              h(Tooltip, { title: (!it.ratingA || !it.ratingB) ? 'Rate both A and B to submit' : (it.submitted ? 'Already submitted' : '') },
+                h(Box, null,
+                  h(Button, {
+                    variant: 'contained',
+                    onClick: () => handleSubmitCurrent(),
+                    disabled: !it.ratingA || !it.ratingB || submitting || it.submitted
+                  }, submitting ? 'Submitting...' : 'Submit')
+                )
+              )
+            )
           )
         )
       )
@@ -273,8 +296,6 @@ function cleanInsightA(text) {
     const [submitting, setSubmitting] = useState(false);
     const [snackbar, setSnackbar] = useState(null);
 
-    const allRated = items.length > 0 && items.every(it => it.ratingA && it.ratingB);
-
     // Initialize selection
     useEffect(() => {
       if (!loading && !error && rows.length) {
@@ -290,19 +311,31 @@ function cleanInsightA(text) {
 
           let displayA = originalA;
           let displayB = originalB;
+          let swapped = false;
           if (Math.random() < 0.5) {
             // Randomly swap A/B order (hidden from users)
             [displayA, displayB] = [displayB, displayA];
+            swapped = true;
           }
 
           return {
             id, // underlying chart id (NOT shown to users)
             imgUrl: `${CHART_DIR}/${id}.svg`,
-            insightA: displayA,
-            insightB: displayB,
+
+            // store originals for submission mapping
+            originalA,
+            originalB,
+
+            // what is shown to the user
+            displayA,
+            displayB,
+            swapped,
+
+            // ratings captured by what the user sees as A/B
             ratingA: null,
             ratingB: null,
-            reason: '' // user free-text reason per chart
+            reason: '', // user free-text reason per chart
+            submitted: false // per-item submit state
           };
         });
         setItems(picked);
@@ -310,12 +343,15 @@ function cleanInsightA(text) {
       }
     }, [loading, error, rows]);
 
-    // Progress (2 ratings per item)
+    // Progress = proportion of submitted items
     const progress = useMemo(() => {
-      const rated = items.reduce((acc, it) => acc + (it.ratingA ? 1 : 0) + (it.ratingB ? 1 : 0), 0);
-      const total = items.length * 2 || 1;
-      return Math.round((rated / total) * 100);
+      const submittedCount = items.reduce((acc, it) => acc + (it.submitted ? 1 : 0), 0);
+      const total = items.length || 1;
+      return Math.round((submittedCount / total) * 100);
     }, [items]);
+
+    // Expose prev for button inside card (so child stays pure)
+    window.appHandlePrev = () => setCurrentIndex(i => Math.max(0, i - 1));
 
     // Rate current item
     function handleRate(field, value) {
@@ -337,27 +373,36 @@ function cleanInsightA(text) {
       });
     }
 
-    // Manual navigation only (auto-advance REMOVED)
-    function handlePrev() { setCurrentIndex(i => Math.max(0, i - 1)); }
-    function handleNext() { setCurrentIndex(i => Math.min(items.length - 1, i + 1)); }
+    function mapRatingsToOriginal(it){
+      // User rated displayA/displayB. If swapped, displayA==originalB.
+      if (!it.swapped) {
+        return { ratingA: it.ratingA, ratingB: it.ratingB };
+      } else {
+        return { ratingA: it.ratingB, ratingB: it.ratingA };
+      }
+    }
 
-    async function handleSubmit() {
-      if (!allRated) return;
+    // Submit only the current item
+    async function handleSubmitCurrent() {
+      const it = items[currentIndex];
+      if (!it || it.submitted || !it.ratingA || !it.ratingB) return;
 
+      const mapped = mapRatingsToOriginal(it);
       const payload = {
         submissionId: (crypto && crypto.randomUUID) ? crypto.randomUUID() : `id-${Date.now()}-${Math.random().toString(36).slice(2)}`,
         createdAt: new Date().toISOString(),
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         userAgent: navigator.userAgent,
-        selectedCharts: items.map(it => it.id),
-        responses: items.map(it => ({
+        selectedCharts: [it.id],
+        responses: [{
           chartId: it.id,
-          insightA: it.insightA,
-          ratingA: it.ratingA,
-          insightB: it.insightB,
-          ratingB: it.ratingB,
-          reason: it.reason
-        }))
+          insightA: it.originalA,
+          ratingA: mapped.ratingA,
+          insightB: it.originalB,
+          ratingB: mapped.ratingB,
+          reason: it.reason,
+          _swapped: it.swapped
+        }]
       };
 
       setSubmitting(true);
@@ -371,7 +416,22 @@ function cleanInsightA(text) {
           body: JSON.stringify(payload),
         });
         if (!res.ok) throw new Error(`Submit failed: ${res.status}`);
-        setSnackbar({ severity: 'success', msg: 'Thanks! Your ratings were submitted.' });
+
+        // Mark current item as submitted and advance to the next unsubmitted item
+        setItems(prev => {
+          const copy = prev.slice();
+          copy[currentIndex] = { ...copy[currentIndex], submitted: true };
+          return copy;
+        });
+
+        setSnackbar({ severity: 'success', msg: `Item #${currentIndex + 1} submitted.` });
+
+        // Auto-advance to next unsubmitted item (if any)
+        setCurrentIndex(idx => {
+          const nextIdx = items.findIndex((x, i) => i > idx && !x.submitted && i !== idx);
+          if (nextIdx !== -1) return nextIdx;
+          return Math.min(idx + 1, items.length - 1);
+        });
       } catch (e) {
         console.warn(e);
         setSnackbar({ severity: 'warning', msg: 'Could not reach the server. Please check SUBMIT_URL.' });
@@ -380,10 +440,7 @@ function cleanInsightA(text) {
       }
     }
 
-    // ======= UI =======
-    // (Removed inline CurrentCard; now defined at module scope to keep identity stable)
-    // (Prevents remount on every keystroke and fixes input jumping)
-    
+    const allSubmitted = items.length > 0 && items.every(it => it.submitted);
 
     return h(ThemeProvider, { theme },
       h(CssBaseline, null),
@@ -392,7 +449,7 @@ function cleanInsightA(text) {
           h(Box, null,
             h(Typography, { variant: 'h4', sx: { fontWeight: 700 } }, 'Chart Insights Rating'),
             h(Typography, { variant: 'subtitle1', color: 'text.secondary' },
-              'One chart at a time. Rate Insight A and Insight B, then use the Next / Previous buttons to navigate.'
+              'One chart at a time. Rate Insight A and Insight B, then click Submit to record each item.'
             )
           ),
 
@@ -400,30 +457,19 @@ function cleanInsightA(text) {
           (error) && h(Alert, { severity: 'error' }, String(error)),
 
           (!loading && !error && items.length > 0) && h(Box, null,
-            h(CurrentCard, { items, currentIndex, handleRate, handleReason }),
+            h(CurrentCard, { items, currentIndex, handleRate, handleReason, handleSubmitCurrent, submitting }),
 
-            // Bottom controls (sticky at page bottom): Next / Previous and Submit
+            // Bottom controls (sticky at page bottom): Progress only. (Global Submit removed)
             h(Box, { className: 'sticky-footer', sx: { py: 1, mt: 2 } },
               h(Stack, { direction: 'row', alignItems: 'center', spacing: 2 },
                 h(Box, { sx: { flex: 1 } },
                   h(LinearProgress, { variant: 'determinate', value: progress }),
-                  h(Typography, { variant: 'caption', color: 'text.secondary' }, `${progress}% complete`)
-                ),
-
-                // Bottom navigation buttons
-                h(Stack, { direction: 'row', spacing: 1 },
-                  h(Button, { variant: 'outlined', onClick: handlePrev, disabled: currentIndex === 0 }, 'Previous'),
-                  h(Button, { variant: 'outlined', onClick: handleNext, disabled: currentIndex >= items.length - 1 }, 'Next')
-                ),
-
-                // Submit remains on the right, enabled only when all rated
-                h(Tooltip, { title: SUBMIT_URL.includes('YOUR-NGROK-SUBDOMAIN') ? 'Configure SUBMIT_URL to enable server submission' : '' },
-                  h(Box, null,
-                    h(Button, { variant: 'contained', disabled: !allRated || submitting, onClick: handleSubmit },
-                      submitting ? 'Submitting...' : 'Submit'
-                    )
+                  h(Typography, { variant: 'caption', color: 'text.secondary' },
+                    allSubmitted ? 'All items submitted — thank you!' : `${progress}% complete`
                   )
-                )
+                ),
+                // NOTE: Removed the old global Submit button as requested.
+                h(Box)
               )
             )
           )
