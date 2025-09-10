@@ -1,0 +1,28 @@
+{
+  "submissionId": "22aca3e0-8993-44a3-96bc-34d97b51c273",
+  "createdAt": "2025-09-10T01:02:32.978Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    24
+  ],
+  "responses": [
+    {
+      "chartId": 24,
+      "insightA": "The provided chart displays average life expectancies across several continents, with Antarctica showing no data, while Africa has the lowest average life expectancy.\n\nEurope is depicted as having the highest life expectancy, followed closely by North America and South America. Africa stands out with significantly lower values compared to other continents.\n\nSorting the continent by average life expectancy shows Africa on the low end and Europe on the high end, aligning with visual observations from both charts.\n\nThe chart and CSV analysis consistently illustrate a trend where life expectancy improves from Africa to Europe. This progression is clear and marked.\n\nThere is a noticeable disparity in life expectancy between continents, with Africa having the lowest and Europe the highest, as corroborated by visual and statistical insights.",
+      "ratingA": 4,
+      "insightB": "The CSV contains data on continents and their average life expectancy. Here's a quick summary:\n\n- **Africa**: 52.57\n- **Asia**: 67.44\n- **Oceania**: 69.71\n- **South America**: 70.95\n- **North America**: 72.99\n\nLet's create a chart showing continents versus mean life expectancy, sorted by life expectancy in ascending order.Here's the chart showing continents vs. mean life expectancy, sorted from lowest to highest:\n\n- **Africa** has the lowest average life expectancy.\n- Other continents increase progressively, with **Europe** having the highest.\n\nIf you have more questions or need further analysis, feel free to ask!",
+      "ratingB": 5,
+      "reason": "T think the quick summary in B sums everything up nicely. A is too wordy.",
+      "_swapped": false,
+      "durationMs": 80331,
+      "firstViewAtISO": "2025-09-10T01:01:12.647Z",
+      "completedAtISO": "2025-09-10T01:02:32.978Z"
+    }
+  ],
+  "prolific": {
+    "pid": "677c0682ec510c0693fc5790",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0ccad2b475aecfc86a1ad"
+  }
+}

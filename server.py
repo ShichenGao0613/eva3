@@ -17,12 +17,12 @@ CORS(
 BASE_DIR = "submissions"
 os.makedirs(BASE_DIR, exist_ok=True)
 
-SAFE = re.compile(r"[^A-Za-z0-9._-]") 
+SAFE = re.compile(r"[^A-Za-z0-9._-]")
 def sanitize(s, default="unknown"):
     if not s:
         return default
     out = SAFE.sub("_", str(s))
-    return out[:80]  
+    return out[:80]
 
 @app.route("/submit", methods=["POST"])
 def submit():
@@ -31,25 +31,44 @@ def submit():
         return jsonify({"ok": False, "error": "invalid JSON"}), 400
 
     prolific = data.get("prolific") or {}
-    pid = sanitize(prolific.get("pid"), "anonymous")  
-    sid = sanitize(prolific.get("sessionId") or data.get("submissionId") or datetime.utcnow().strftime("noid-%Y%m%dT%H%M%S"))
+    pid = sanitize(prolific.get("pid"), "anonymous")
+
     submission_id = sanitize(data.get("submissionId")) or datetime.utcnow().strftime("noid-%Y%m%dT%H%M%S")
-   
+
     try:
         chart_id = (data.get("responses") or [{}])[0].get("chartId")
     except Exception:
         chart_id = None
     chart_id = sanitize(chart_id if chart_id is not None else "unknown")
 
+    # 受试者目录（不再有 session 子目录）
     part_dir = os.path.join(BASE_DIR, pid)
     os.makedirs(part_dir, exist_ok=True)
-    path = os.path.join(part_dir, f"{submission_id}__chart-{chart_id}.json")
 
-   
+    # === 核心：计算 record_num（按提交到达顺序） ===
+    existing = [fn for fn in os.listdir(part_dir) if fn.endswith(".json")]
+    record_num = len(existing) + 1  # 1..10
+
+    fname = f"{submission_id}__chart-{chart_id}__record-{record_num:02d}.json"
+    path = os.path.join(part_dir, fname)
+
+    # 可选：写入服务端元信息
+    server_meta = {
+        "saved_at_iso": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        "pid": pid,
+        "chart_id": chart_id,
+        "record_num": record_num,
+        "filename": fname,
+    }
+    if "_server" not in data or not isinstance(data["_server"], dict):
+        data["_server"] = server_meta
+    else:
+        data["_server"].update(server_meta)
+
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    return jsonify({"ok": True, "saved": path})
+    return jsonify({"ok": True, "saved": path, "record_num": record_num, "filename": fname})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True, threaded=True)

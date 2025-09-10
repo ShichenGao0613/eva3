@@ -1,0 +1,28 @@
+{
+  "submissionId": "204d74a2-c9fa-4f12-8bec-a68acd8c738f",
+  "createdAt": "2025-09-10T00:58:32.099Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    40
+  ],
+  "responses": [
+    {
+      "chartId": 40,
+      "insightA": "The line chart shows fluctuations in the number of distinct courses provided each year, with noticeable peaks around 2002 and 2006, while dips occur in 2004 and 2008.\n\nThe pattern indicates uneven distribution over the years, with the highest number of courses provided in 2002 and a significant decrease in 2004. The trend increases again peaking in 2006 before another drop in 2008.\n\nThe CSV data confirms these observations with the highest number of distinct courses (13) observed in 2002 and the lowest (7) in 2004.\n\nOverall, the course offerings show irregular variations across the years, with notable spikes roughly every four years.\n\nThe number of distinct courses provided varies significantly each year, showing peaks in 2002 and 2006, with dips in 2004 and 2008, suggesting patterns of peaks occurring approximately every four years.",
+      "ratingA": 4,
+      "insightB": "The CSV file contains data on the number of different courses provided each year. Here is the information extracted:\n\n### Number of Different Courses Provided Each Year:\n- **2001:** 5 courses\n- **2002:** 13 courses\n- **2003:** 12 courses\n- **2004:** 7 courses\n- **2005:** 8 courses\n- **2006:** 13 courses\n- **2007:** 12 courses\n- **2008:** 7 courses\n- **2009:** 6 courses\n- **2010:** 10 courses\n\n### Insights from Chart:\nThe chart depicts similar information, showing fluctuations in the number of distinct courses offered from 2001 to 2010, corresponding to the data from the CSV.\n\nWould you like any further analysis or insights from this data?",
+      "ratingB": 5,
+      "reason": "I thought A was just slightly better because it breaks down the chart.",
+      "_swapped": true,
+      "durationMs": 100918,
+      "firstViewAtISO": "2025-09-10T00:56:51.181Z",
+      "completedAtISO": "2025-09-10T00:58:32.099Z"
+    }
+  ],
+  "prolific": {
+    "pid": "677c0682ec510c0693fc5790",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0ccad2b475aecfc86a1ad"
+  }
+}

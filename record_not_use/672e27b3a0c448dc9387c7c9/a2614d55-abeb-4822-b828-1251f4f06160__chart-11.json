@@ -1,0 +1,28 @@
+{
+  "submissionId": "a2614d55-abeb-4822-b828-1251f4f06160",
+  "createdAt": "2025-09-10T01:19:57.719Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    11
+  ],
+  "responses": [
+    {
+      "chartId": 11,
+      "insightA": "The scatter plot illustrates a strong positive correlation between IMDB and Rotten Tomatoes ratings, as the data points form an upward trend along the diagonal.\n\nThe visual analysis indicates a clear pattern, with as IMDB ratings increase, Rotten Tomatoes ratings tend to rise as well. The data points are densely packed, emphasizing a linear relationship.\n\nThe statistical analysis reveals average IMDB and Rotten Tomatoes ratings of approximately 6.48 and 55.30, respectively, with a strong positive correlation of about 0.74, highlighting a significant linear association.\n\nBoth the visual plot and statistical computations confirm a robust correlation between the two rating systems, suggesting that higher IMDB ratings are typically associated with higher Rotten Tomatoes ratings.\n\nThere exists a strong positive correlation between IMDB and Rotten Tomatoes ratings, supported by consistent visual and statistical findings.",
+      "ratingA": 4,
+      "insightB": "The CSV file contains two columns: \"IMDB Rating\" and \"Rotten Tomatoes Rating\". Let's combine this data with the insights from the chart you uploaded.\n\nKey observations from the chart and data:\n\n1. **Correlation**: Both the chart and the data show a positive correlation between IMDB ratings and Rotten Tomatoes ratings. As one increases, the other does too.\n\n2. **Rating Range**:\n   - **IMDB Rating**: Generally ranges from about 2 to 9.\n   - **Rotten Tomatoes Rating**: Ranges from about 0 to 100.\n\n3. **Density**: \n   - Most data points cluster between IMDB ratings of 4 to 8 and Rotten Tomatoes ratings of 40 to 80, indicating that most movies fall in this rating range.\n\n4. **Outliers**: \n   - There are fewer movies with very low IMDB or Rotten Tomatoes ratings, suggesting that movies with extremely low ratings are less common.\n\nIf you need further analysis or a different visualization, please let me know!",
+      "ratingB": 5,
+      "reason": "I ilke how Insight A breaks down normal ranges for each category and how the outliers were explained in a simple yet intuitive manner.",
+      "_swapped": true,
+      "durationMs": 141910,
+      "firstViewAtISO": "2025-09-10T01:17:35.809Z",
+      "completedAtISO": "2025-09-10T01:19:57.719Z"
+    }
+  ],
+  "prolific": {
+    "pid": "672e27b3a0c448dc9387c7c9",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0cce36a12995413c564d8"
+  }
+}

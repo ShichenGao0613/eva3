@@ -1,0 +1,28 @@
+{
+  "submissionId": "e2a5abcf-e59c-435e-90de-20d6d509420a",
+  "createdAt": "2025-09-10T01:08:28.411Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    8
+  ],
+  "responses": [
+    {
+      "chartId": 8,
+      "insightA": "The histogram shows that the majority of movies have running times between 90 and 130 minutes, with a peak in the 100-110 minute range.\n\nThere is a noticeable decline in the number of movies with running times above 130 minutes, and very few movies surpass 160 minutes.\n\nPython analysis reveals a mean running time of approximately 110 minutes and a standard deviation of about 15 minutes, indicating most movies have a similar running time.\n\nThe visual representation aligns with the statistical analysis, confirming most films are concentrated around the average running time of 110 minutes with minimal variations.\n\nMovies predominantly have a running time near 110 minutes, with a significant drop in longer films, consistent with both visual and statistical data.",
+      "ratingA": 3,
+      "insightB": "The CSV contains a column called \"Running Time,\" representing the duration of movies.\n\nNext, I'll analyze the distribution of running times to compare it with the histogram.The distribution of movie running times is as follows:\n\n- **60-80 minutes:** 8 movies\n- **80-100 minutes:** 191 movies\n- **100-120 minutes:** 270 movies\n- **120-140 minutes:** 171 movies\n- **140-160 minutes:** 50 movies\n- **160-180 minutes:** 14 movies\n- **180-200 minutes:** 5 movies\n\n### Insights:\n\n- **Most Common Range:** 100-120 minutes, with the highest count of 270 movies.\n- **Least Common Range:** 180-200 minutes, with only 5 movies.\n- The distribution shows a peak in the 100-120 minutes range, which matches the highest bar in your histogram.\n\nLet me know if you need further analysis!",
+      "ratingB": 5,
+      "reason": "A has broken up the chart in a cohesive way. Easy to read for quick information.",
+      "_swapped": true,
+      "durationMs": 59386,
+      "firstViewAtISO": "2025-09-10T01:07:29.025Z",
+      "completedAtISO": "2025-09-10T01:08:28.411Z"
+    }
+  ],
+  "prolific": {
+    "pid": "677c0682ec510c0693fc5790",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0ccad2b475aecfc86a1ad"
+  }
+}

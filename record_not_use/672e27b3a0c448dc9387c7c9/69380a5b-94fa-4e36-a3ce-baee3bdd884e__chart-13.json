@@ -1,0 +1,28 @@
+{
+  "submissionId": "69380a5b-94fa-4e36-a3ce-baee3bdd884e",
+  "createdAt": "2025-09-10T01:21:44.681Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    13
+  ],
+  "responses": [
+    {
+      "chartId": 13,
+      "insightA": "The bar chart illustrates that Action, Adventure, and Drama genres have the highest worldwide gross, with the PG-13 and R ratings commonly contributing significant portions.\n\nA noticeable trend is that the PG-13 rating consistently contributes to a high total gross across several genres, particularly in Action, Adventure, and Drama.\n\nThe CSV data confirms that the major contributors to worldwide gross across genres are PG-13 and R ratings, with Action, Adventure, and Drama topping the chart in monetary terms.\n\nBoth the visual representation and CSV data analysis indicate that PG-13 and R rated films, particularly in Action, Adventure, and Drama genres, dominate worldwide gross earnings.\n\nPG-13 and R ratings are pivotal in achieving high worldwide grosses for films, especially in popular genres like Action, Adventure, and Drama.",
+      "ratingA": 4,
+      "insightB": "The CSV file contains data on movies, with columns for:\n\n- **Major Genre**: The genre of the film.\n- **Content Rating**: The movie rating (G, PG, PG-13, R).\n- **total_worldwide_gross**: The total worldwide gross revenue.\n\n### Insights\n\nI will now aggregate this data to show the total worldwide gross by film category, broken down by movie rating, and compare it with the provided chart. Let's analyze this further.Here's the aggregated data showing the total worldwide gross by film category, broken down by movie rating:\n\n### Key Insights\n\n1. **Action Movies**:\n   - Dominated by PG-13 and R ratings.\n   - PG-13: Significant gross, aligning with the chart.\n\n2. **Adventure Movies**:\n   - PG and PG-13 ratings are prominent.\n   - G-rated adventures also perform well.\n\n3. **Comedy**: \n   - Balanced contribution from PG and PG-13.\n   - G-rated comedies have lower gross.\n\n4. **Drama**:\n   - PG-13 and R ratings are strong.\n   - Small contribution from G-rated dramas.\n\n5. **Thriller**:\n   - Primarily R and PG-13 rated.\n\nThis data aligns with the trends shown in the chart you provided, where Adventure and Action genres show high gross across PG and PG-13 ratings. Other genres have varied distributions based on their rating.\n\nLet me know if you need further analysis or a specific breakdown!",
+      "ratingB": 5,
+      "reason": "Although Insight A is longer I feel like it goes more in depth and is a bit easier to understand because it offers that extra bit of information. I feel like B only covers few highlights where A explores a bit more",
+      "_swapped": true,
+      "durationMs": 106802,
+      "firstViewAtISO": "2025-09-10T01:19:57.879Z",
+      "completedAtISO": "2025-09-10T01:21:44.681Z"
+    }
+  ],
+  "prolific": {
+    "pid": "672e27b3a0c448dc9387c7c9",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0cce36a12995413c564d8"
+  }
+}

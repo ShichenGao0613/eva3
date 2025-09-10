@@ -1,0 +1,28 @@
+{
+  "submissionId": "29f4d857-78c3-4aca-8d2f-33912f6f2f96",
+  "createdAt": "2025-09-10T01:23:20.711Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    23
+  ],
+  "responses": [
+    {
+      "chartId": 23,
+      "insightA": "The line chart shows distinct patterns in average horsepower over the years, with the USA consistently exhibiting higher values compared to Europe and Japan.\n\nVisually, the USA exhibited a steep decline from 1970 to 1973 and then fluctuated before stabilizing. In contrast, Europe and Japan showed relatively stable trends with minor fluctuations throughout the period.\n\nStatistics reveal the USA had the highest average horsepower over the years, approximately 115.18, while Europe and Japan had similar averages around 77.12 and 76.54 respectively.\n\nThe visual patterns align with statistical calculations, highlighting the USA's initial dominance in horsepower, followed by a convergence among all regions by the early 80s.\n\nThe data suggests a reduction in the USA's average horsepower over time, aligning more closely with European and Japanese trends by the early 80s, driven by market changes and possibly fuel efficiency considerations.",
+      "ratingA": 5,
+      "insightB": "The CSV file provides the average horsepower over the years, categorized by the origin of the vehicles (Europe, Japan, USA). Let's analyze the data alongside the provided chart to derive insights.\n\n### Key Insights\n\n1. **Trends Over Time**:\n   - **USA**: The chart shows a high average horsepower for the USA, especially around the early 70s, with a gradual decrease into the 80s.\n   - **Europe** and **Japan**: Both have lower average horsepower compared to the USA throughout the years, with some fluctuations in the 70s and an alignment closer to the USA in the early 80s.\n\n2. **Horsepower Comparisons**:\n   - In the early 70s, the USA vehicles have significantly higher horsepower compared to Europe and Japan.\n   - By the early 80s, the gap between the USA and the other regions narrows, indicating changes in automobile designs or market preferences.\n\n3. **Patterns of Change**:\n   - The decrease in horsepower for USA cars may reflect responses to energy crises or regulatory changes.\n   - The increase or stability for Europe and Japan might indicate a different strategy focusing on fuel efficiency or economic factors.\n\nWould you like further analysis or visualization of this data?",
+      "ratingB": 4,
+      "reason": "Insight A seemed to have more specific points and general insights where B just explored overall trends. While I like A's response better, I like that B asked if I need further analysis",
+      "_swapped": false,
+      "durationMs": 95828,
+      "firstViewAtISO": "2025-09-10T01:21:44.883Z",
+      "completedAtISO": "2025-09-10T01:23:20.711Z"
+    }
+  ],
+  "prolific": {
+    "pid": "672e27b3a0c448dc9387c7c9",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0cce36a12995413c564d8"
+  }
+}

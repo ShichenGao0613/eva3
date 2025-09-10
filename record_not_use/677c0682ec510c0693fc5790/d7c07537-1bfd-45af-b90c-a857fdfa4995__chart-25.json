@@ -1,0 +1,28 @@
+{
+  "submissionId": "d7c07537-1bfd-45af-b90c-a857fdfa4995",
+  "createdAt": "2025-09-10T01:04:37.715Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    25
+  ],
+  "responses": [
+    {
+      "chartId": 25,
+      "insightA": "The bar chart shows counts for different classes, with 'DP/GT' having a higher count than 'GT'.\n\nThe chart visually confirms that 'DP/GT' is more frequent compared to 'GT'.\n\nThe CSV data displays that 'DP/GT' has a count of 5, while 'GT' has a count of 2.\n\nBoth the chart and CSV data consistently show that 'DP/GT' is nearly twice as frequent as 'GT', indicating a clear preference or greater occurrence of the 'DP/GT' class.\n\nThe 'DP/GT' class dominates with a higher count than 'GT', as shown by both visual and numerical data.",
+      "ratingA": 5,
+      "insightB": "The CSV data consists of two classes: \"GT\" with a count of 2, and \"DP/GT\" with a count of 5.\n\nNow, let's combine this information and the image data:\n\n1. **Class Counts from CSV:**\n   - \"GT\": 2\n   - \"DP/GT\": 5\n\n2. **Chart Image:**\n   - Confirms the counts with:\n     - \"GT\" bar height corresponding to 2\n     - \"DP/GT\" bar height corresponding to 5\n\n### Insight:\n- \"DP/GT\" has a higher count than \"GT\", and when sorted in descending order by class count:\n  1. DP/GT: 5\n  2. GT: 2\n\nThis ordering aligns with both the CSV data and the chart image.",
+      "ratingB": 3,
+      "reason": "I just think that the way B looks is more cohesive and easier to read",
+      "_swapped": true,
+      "durationMs": 48420,
+      "firstViewAtISO": "2025-09-10T01:03:49.295Z",
+      "completedAtISO": "2025-09-10T01:04:37.715Z"
+    }
+  ],
+  "prolific": {
+    "pid": "677c0682ec510c0693fc5790",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0ccad2b475aecfc86a1ad"
+  }
+}

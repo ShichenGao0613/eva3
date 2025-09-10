@@ -1,0 +1,28 @@
+{
+  "submissionId": "4de5694d-0928-4151-a79f-d137c5f81211",
+  "createdAt": "2025-09-10T01:08:19.537Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    3
+  ],
+  "responses": [
+    {
+      "chartId": 3,
+      "insightA": "The scatter plot shows a concentrated cluster of data points around the origin, with a gradual spread towards higher profit and sales. Some outliers with high sales but varied profit are also visible.\n\nThe chart indicates a potential positive relationship between profit and sales. Most data points concentrate near zero profit with moderate sales, but higher profit values generally align with higher sales.\n\nThe statistical analysis reveals a moderate positive correlation of approximately 0.59 between profit and sales. The mean profit is around 29.71 with a standard deviation of 259.63, while the mean sales are about 227.57 with a standard deviation of 622.99.\n\nCombining visual and statistical insights reveals that higher profit is generally associated with increased sales, although there is significant variability. The presence of outliers also suggests exceptions to this trend.\n\nThere is a moderate positive correlation between profit and sales, indicated by visual and statistical analysis. While higher sales often accompany higher profits, variability and outliers point to underlying complexities.",
+      "ratingA": 4,
+      "insightB": "The CSV data contains columns for \"Profit\" and \"Sales.\" Let's analyze it together with the scatter plot to derive insights.\n\n1. **Scatter Plot Overview**:\n    - The scatter plot shows a concentration of data points in a dense cluster around zero for both profit and sales.\n    - A few points are widely spread, indicating some outliers in terms of high sales and profit.\n\n2. **CSV Data Insights**:\n    - The majority of data points are small in both profit and sales.\n    - Positive correlation: As profit increases, sales tend to increase as well.\n\nLet's calculate some statistics from the CSV data to deepen this understanding.### Insights from Statistics:\n\n1. **Profit**:\n   - **Mean**: Approximately 29.71\n   - **Median**: 8.50\n   - **Standard Deviation**: 259.63 (indicating wide variability)\n   - **Range**: From -6599.98 to 8399.98\n\n2. **Sales**:\n   - **Mean**: Approximately 227.57\n   - **Median**: 53.42\n   - **Standard Deviation**: 622.99 (indicating wide variability)\n   - **Range**: From 0.44 to 17499.95\n\n### Interpretations:\n\n- **Variability**: Both profit and sales have high variability, as indicated by large standard deviations relative to the means.\n- **Outliers**: Presence of negative profit and extreme values in sales suggests potential outliers.\n- **Correlation**: Positive correlation is visible as increases in profit generally align with increases in sales in the plot.\n\nThe data suggests that overall, there are more low-profit, low-sales transactions with a few high-value outliers.",
+      "ratingB": 5,
+      "reason": "I feel like A gave better break down and also used the actual numbers that are in the picture. I also went more in depth",
+      "_swapped": true,
+      "durationMs": 312341,
+      "firstViewAtISO": "2025-09-10T01:03:07.196Z",
+      "completedAtISO": "2025-09-10T01:08:19.536Z"
+    }
+  ],
+  "prolific": {
+    "pid": "672e27b3a0c448dc9387c7c9",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0cce36a12995413c564d8"
+  }
+}

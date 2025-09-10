@@ -1,0 +1,28 @@
+{
+  "submissionId": "4ec65c5d-c123-46b6-a038-4a2649684512",
+  "createdAt": "2025-09-10T01:14:56.759Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    18
+  ],
+  "responses": [
+    {
+      "chartId": 18,
+      "insightA": "The bar chart shows a trend where average MPG tends to decrease as the number of cylinders increases, with the lowest MPG for 8 cylinders.\n\nA clear trend is observed where vehicles with fewer cylinders (3 to 5) exhibit higher average MPG compared to those with more cylinders (6 to 8).\n\nAnalysis of the CSV data confirms the visual trend, with the average MPG decreasing from 29.6 for 4 cylinders to 15.0 for 8 cylinders.\n\nBoth the visual and statistical analyses confirm that the number of cylinders is inversely related to average MPG, with fewer cylinders associated with higher efficiency.\n\nThere is a strong inverse relationship between the number of cylinders and average MPG, with more cylinders resulting in lower fuel efficiency.",
+      "ratingA": 4,
+      "insightB": "The CSV data contains two columns: \"Cylinders\" and \"Average MPG\". Here's a breakdown:\n\n- **3 Cylinders:** Average MPG = 20.55\n- **4 Cylinders:** Average MPG = 29.61\n- **5 Cylinders:** Average MPG = 27.37\n- **6 Cylinders:** Average MPG = 19.98\n- **8 Cylinders:** Average MPG = 15.02\n\n### Insights from Chart and Data:\n\n1. **Trend:** There is a general trend where the average MPG decreases as the number of cylinders increases.\n   \n2. **Efficiency Peaks:** Vehicles with 4 cylinders have the highest average MPG (29.61), indicating better fuel efficiency compared to those with more cylinders.\n\n3. **Lowest Efficiency:** Vehicles with 8 cylinders have the lowest average MPG (15.02), reflecting lower fuel efficiency.\n\nThis aligns with the uploaded bar chart, which visually presents this trend, with average MPG decreasing as the number of cylinders increases.\n\nIf you have any further analysis or questions, feel free to ask!",
+      "ratingB": 5,
+      "reason": "Insight A is more appealing to me here, it has a better outline's the numerical values for the averages of each cylinder amount. It has a better way of describing the trends",
+      "_swapped": true,
+      "durationMs": 117910,
+      "firstViewAtISO": "2025-09-10T01:12:58.849Z",
+      "completedAtISO": "2025-09-10T01:14:56.759Z"
+    }
+  ],
+  "prolific": {
+    "pid": "672e27b3a0c448dc9387c7c9",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0cce36a12995413c564d8"
+  }
+}

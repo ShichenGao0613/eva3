@@ -1,0 +1,28 @@
+{
+  "submissionId": "921ab17b-9ebe-4f85-a863-1a83d1bd02b7",
+  "createdAt": "2025-09-10T01:09:33.453Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    12
+  ],
+  "responses": [
+    {
+      "chartId": 12,
+      "insightA": "The chart shows an upward trend in the average production budget from 1996 to 2008, with notable increases around 2003 and a significant rise by 2008.\n\nVisually, the chart suggests a gradual increase in production budgets over the years, with some fluctuations but a generally upward trajectory.\n\nStatistical analysis reveals a mean production budget of approximately $60 million, with a median of about $58 million. The standard deviation is around $12.8 million, indicating moderate variability. The correlation between release year and production budget is approximately 0.72, suggesting a strong positive relationship.\n\nThe visual trends and statistical analysis together indicate a notable increasing trend in production budgets over the examined period, with substantial growth particularly noticeable in the later years.\n\nThere is a strong positive correlation between the release year and the production budget, supported by both the observed upward trend in the chart and the calculated statistical measures.",
+      "ratingA": 4,
+      "insightB": "The CSV file contains two columns: \"Release Year\" and \"avg_production_budget\" (the average production budget). The years range from 1996 onwards, with corresponding average budgets in dollars. \n\n### Insights from the Data and Chart\n\n1. **Trend Observation**:\n   - Both the chart and CSV data show a general increase in the average production budget over the years.\n   \n2. **Specific Increases**:\n   - The chart highlights a notable increase after 2008, with the average budget rising significantly.\n\n3. **Budget Summary**:\n   - From the CSV, we see specific values such as \\$45 million in 1996 and \\$58 million in 1997, indicating fluctuations in the early years.\n\nIf you want more detailed insights or specific analyses, feel free to ask!",
+      "ratingB": 5,
+      "reason": "A is just reading the details but B arranges them in way that makes it easier to read the information.",
+      "_swapped": false,
+      "durationMs": 64558,
+      "firstViewAtISO": "2025-09-10T01:08:28.895Z",
+      "completedAtISO": "2025-09-10T01:09:33.453Z"
+    }
+  ],
+  "prolific": {
+    "pid": "677c0682ec510c0693fc5790",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0ccad2b475aecfc86a1ad"
+  }
+}

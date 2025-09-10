@@ -1,0 +1,28 @@
+{
+  "submissionId": "78f817d0-ccb0-4f00-9de2-461a943b103b",
+  "createdAt": "2025-09-10T01:25:56.650Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    37
+  ],
+  "responses": [
+    {
+      "chartId": 37,
+      "insightA": "The bar chart shows that Pakhtakor has the highest count of games as a home team, followed by Bunyodkor and Quruvchi.\n\nThe visual data suggests Pakhtakor plays frequently against both Bunyodkor and Quruvchi as the home team.\n\nThe CSV analysis confirms each combination of Home_team and Away_team occurs once, with Pakhtakor as a home team appearing most frequently.\n\nThe integrated analysis indicates Pakhtakor is the most common home team, with games evenly split against Bunyodkor and Quruvchi.\n\nPakhtakor has hosted the most games as a home team, and has an even distribution of matchups against the away teams, Bunyodkor and Quruvchi.",
+      "ratingA": 4,
+      "insightB": "The CSV file contains the following data:\n\n| Home_team | count(Home_team) | Away_team |\n|-----------|------------------|-----------|\n| Quruvchi  | 1                | Pakhtakor |\n| Pakhtakor | 7                | Bunyodkor |\n| Pakhtakor | 3                | Quruvchi  |\n| Bunyodkor | 9                | Pakhtakor |\n\nNow, let's aggregate the data and sort the results by `Home_team` in descending order.Here are the aggregated and sorted results:\n\n- **Bunyodkor** vs Pakhtakor: 9 games\n- **Pakhtakor** vs Bunyodkor: 7 games\n- **Pakhtakor** vs Quruvchi: 3 games\n- **Quruvchi** vs Pakhtakor: 1 game\n\nIf you have further questions or need additional analysis, feel free to ask!",
+      "ratingB": 5,
+      "reason": "I feel like I like how Insight A was able to properly aggregate the results of the graph into a numerical table that was very easy to understand. personally, my mind begins to understand and analyze the data a lot faster than when i am reading the insight from B. I think A gives a better starting point to further dive into the data",
+      "_swapped": true,
+      "durationMs": 155300,
+      "firstViewAtISO": "2025-09-10T01:23:21.350Z",
+      "completedAtISO": "2025-09-10T01:25:56.650Z"
+    }
+  ],
+  "prolific": {
+    "pid": "672e27b3a0c448dc9387c7c9",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0cce36a12995413c564d8"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "submissionId": "32fcd36e-8f33-4115-af03-0e0ef98a268f",
+  "createdAt": "2025-09-10T01:07:28.740Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    1
+  ],
+  "responses": [
+    {
+      "chartId": 1,
+      "insightA": "The column chart illustrates the count of items across various sub-categories, with Binders, Paper, and Furnishings showing the highest counts, and Copiers having the lowest.\n\nThere is a noticeable decline in counts from the highest category (Binders) to the lowest (Copiers), indicating variability in sub-category counts.\n\nAnalysis of the data confirms the visual observation: Binders have the highest count at 915, while Copiers have the lowest at 234.\n\nThe combined visual and statistical analysis highlights significant disparities in counts among sub-categories, with Binders and Paper being particularly prominent.\n\nThe counts of items vary widely among sub-categories, with Binders and Paper significantly outnumbering other categories, hinting at potential differences in demand or importance.",
+      "ratingA": 5,
+      "insightB": "### Insights from the Chart and CSV Data\n\n#### Chart Observations:\n- The chart is a column chart showing the count of items by sub-category.\n- Sub-categories are ordered from highest to lowest count.\n- \"Binders\" and \"Paper\" have the highest counts, around 900 and 800 respectively.\n- \"Copiers\" have the lowest count.\n\n#### CSV Data Overview:\n- The CSV data lists sub-categories with corresponding counts.\n- The sub-category details match the order and values seen in the chart.\n\n#### Combined Insights:\n- **Top Sub-Categories**: \"Binders\" and \"Paper\" are the most stocked or sold items, potentially indicating popular demand or frequent restocking needs.\n- **Mid-Range Counts**: \"Furnishings,\" \"Phones,\" and \"Storage\" are mid-range in count, suggesting moderate demand or slower turnover.\n- **Lowest Counts**: \"Copiers\" and a few others have much lower counts, which could indicate niche demand or overstocking.\n\nThese insights could be valuable for inventory management and sales analysis. Adjusting orders based on this data might optimize stock levels and meet customer demand more effectively.",
+      "ratingB": 3,
+      "reason": "B flows better. A is kind of confusing to read.",
+      "_swapped": true,
+      "durationMs": 53780,
+      "firstViewAtISO": "2025-09-10T01:06:34.961Z",
+      "completedAtISO": "2025-09-10T01:07:28.740Z"
+    }
+  ],
+  "prolific": {
+    "pid": "677c0682ec510c0693fc5790",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0ccad2b475aecfc86a1ad"
+  }
+}

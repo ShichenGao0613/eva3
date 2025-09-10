@@ -1,0 +1,28 @@
+{
+  "submissionId": "3811b105-34ff-4aa5-996b-eb07c45b1f48",
+  "createdAt": "2025-09-10T01:01:12.165Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    36
+  ],
+  "responses": [
+    {
+      "chartId": 36,
+      "insightA": "The bar chart displays the total monthly rental data for 'apartment' and 'house' by month. March has significantly higher rentals compared to February, with houses contributing more prominently.\n\nIn March, the total rental for houses exceeds that for apartments, while February shows minimal rental values for both types.\n\nData analysis confirms March has the highest total rentals, with the rental for houses being the largest. The March figures are roughly double those of apartments.\n\nMarch stands out as the month with the highest total rentals, mainly driven by higher house rentals. February has significantly lower rentals.\n\nMarch exhibits the highest total rentals, predominantly due to house rentals, highlighting a distinct monthly variation in rental patterns.",
+      "ratingA": 5,
+      "insightB": "Here's a preview of the data from the CSV file:\n\n| month | other_details | total_rental |\n|-------|---------------|--------------|\n| Mar   | house         | 10726.4778   |\n| Mar   | apartment     | 6052.6934    |\n| Feb   | apartment     | 1297.3186    |\n| Feb   | house         | 747.5312     |\n\nNow, let's calculate the total rental for each month, organized by `other_details`, and then sort and display the results starting with the highest total.Here are the total monthly rentals organized by `other_details` and sorted by the highest total:\n\n| Month | Other Details | Total Rental |\n|-------|---------------|--------------|\n| Mar   | House         | 10726.48     |\n| Mar   | Apartment     | 6052.69      |\n| Feb   | Apartment     | 1297.32      |\n| Feb   | House         | 747.53       |\n\nThis aligns with the image, which shows March having significantly higher totals compared to February.",
+      "ratingB": 3,
+      "reason": "I think B is better this time, its more informative in general. The chart information in A makes it cluttered and seems a little confusing because of the way its added into the response.",
+      "_swapped": true,
+      "durationMs": 159333,
+      "firstViewAtISO": "2025-09-10T00:58:32.832Z",
+      "completedAtISO": "2025-09-10T01:01:12.165Z"
+    }
+  ],
+  "prolific": {
+    "pid": "677c0682ec510c0693fc5790",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0ccad2b475aecfc86a1ad"
+  }
+}

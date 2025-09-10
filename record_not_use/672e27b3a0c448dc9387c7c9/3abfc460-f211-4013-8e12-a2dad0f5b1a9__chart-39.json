@@ -1,0 +1,28 @@
+{
+  "submissionId": "3abfc460-f211-4013-8e12-a2dad0f5b1a9",
+  "createdAt": "2025-09-10T01:17:35.614Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    39
+  ],
+  "responses": [
+    {
+      "chartId": 39,
+      "insightA": "The plot shows a significant spike in the average budget around the mid-1900s, with a sharp increase to above 450 billion, followed by a decline.\n\nThe chart indicates a gradual increase in budget averages until the 1900s, after which there's a steep peak, suggesting an outlier or significant event.\n\nCalculation shows the largest average budget occurs around 1950. The data reveals a high variance, indicating significant fluctuations during different periods.\n\nCombining visual and statistical analyses, the spike suggests an anomaly or a particular era with extraordinary budgeting, drastically different from the rest.\n\nThe data exhibits a sharp peak in budgeting around 1950, potentially signifying a historical event or anomaly affecting budget trends during this creation period.",
+      "ratingA": 4,
+      "insightB": "The chart you provided and the one plotted from the CSV data both illustrate the trend of average budgets in billions over different years of creation. Here are some insights:\n\n1. **Rapid Increase and Peak**: There's a steep increase in the average budget around the 20th century, peaking around the 1950s. This suggests a significant surge in resources allocated during that period.\n\n2. **Decline Post-Peak**: After the peak, there's a noticeable decline, indicating reduced average budgets in subsequent years.\n\n3. **Fluctuations**: Prior to 1900, the average budget remains relatively stable, with minor fluctuations. After the major peak, there are smaller ups and downs.\n\nComparing both charts reinforces these observations, showing consistent patterns across both representations.",
+      "ratingB": 5,
+      "reason": "I liked Insight B here, while they both mentino the peak in 1950, I like how B breaks it down into three separate sections to explore the trends in the graph",
+      "_swapped": false,
+      "durationMs": 158339,
+      "firstViewAtISO": "2025-09-10T01:14:57.275Z",
+      "completedAtISO": "2025-09-10T01:17:35.614Z"
+    }
+  ],
+  "prolific": {
+    "pid": "672e27b3a0c448dc9387c7c9",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "68c0cce36a12995413c564d8"
+  }
+}
