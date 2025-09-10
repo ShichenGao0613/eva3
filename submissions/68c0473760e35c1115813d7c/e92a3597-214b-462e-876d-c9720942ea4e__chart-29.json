@@ -1,0 +1,28 @@
+{
+  "submissionId": "e92a3597-214b-462e-876d-c9720942ea4e",
+  "createdAt": "2025-09-10T00:13:25.822Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    29
+  ],
+  "responses": [
+    {
+      "chartId": 29,
+      "insightA": "The bar chart reveals that the area code '403' has a count of 4, while '780' has a count of 2.\n\nThere is a clear visual distinction, showing that more employees have phone numbers with the area code '403' compared to '780'.\n\nThe CSV data confirms the visual finding, showing counts of 5 for area code '403' and 2 for area code '780'.\n\nBoth the chart and CSV analysis consistently indicate that area code '403' is more common among employees.\n\nThe majority of employees have phone numbers starting with area code '403', as demonstrated by both the chart and data analysis.",
+      "ratingA": 4,
+      "insightB": "The data contains phone numbers along with their counts. Let's extract the area codes from the phone numbers and count them accordingly. Then, we'll compare this with the chart provided to generate insights.The area code counts from the CSV data are as follows:\n\n- **403**: 5 occurrences\n- **780**: 2 occurrences\n\nComparing this with the bar chart:\n\n- The chart shows 4 counts for area code 403, but the data indicates 5.\n- The chart shows 2 counts for area code 780, which matches the data.\n\n### Insights:\n\n1. There might be an inconsistency between the data and the chart for area code **403**.\n2. The data and chart agree on the count for area code **780**.\n\nWould you like any further analysis or visualizations?",
+      "ratingB": 5,
+      "reason": "dda",
+      "_swapped": false,
+      "durationMs": 2690480,
+      "firstViewAtISO": "2025-09-09T23:28:35.327Z",
+      "completedAtISO": "2025-09-10T00:13:25.822Z"
+    }
+  ],
+  "prolific": {
+    "pid": "68c0473760e35c1115813d7c",
+    "studyId": "68c0585e5020c8997d71a0e0",
+    "sessionId": "0gwlb5iwfuhv"
+  }
+}

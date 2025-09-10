@@ -1,0 +1,28 @@
+{
+  "submissionId": "ff6fefe1-94dd-48f8-9746-d10cd302f36a",
+  "createdAt": "2025-09-09T23:56:32.124Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    32
+  ],
+  "responses": [
+    {
+      "chartId": 32,
+      "insightA": "The scatter plot indicates a clear negative correlation between Horsepower and Accelerate, with Accelerate values generally decreasing as Horsepower increases.\n\nA visual inspection reveals a strong negative correlation, characterized by a consistent downward trend as Horsepower increases.\n\nStatistical analysis conducted in Python shows a strong negative correlation (approximately -0.76) between Horsepower and Accelerate.\n\nThe visual observations and statistical analyses collectively confirm a strong inverse relationship between Horsepower and Accelerate, suggesting that cars with higher Horsepower tend to accelerate faster.\n\nThere is a strong negative correlation between Horsepower and Accelerate, supported by both visual and statistical evidence, indicating that as Horsepower increases, the time to accelerate decreases.",
+      "ratingA": 3,
+      "insightB": "The dataset contains two columns: \"Horsepower\" and \"Accelerate\". Now, let's filter the data for cars with \"Horsepower\" greater than 200 and create a plot to illustrate the correlation between \"Horsepower\" and \"Accelerate\".Here's the plot illustrating the correlation between \"Horsepower\" and \"Accelerate\" for cars with horsepower greater than 200. The data suggests a generally scattered relationship with a few data points. This may suggest that other factors could be influencing acceleration in this range of horsepower. If you need further analysis or insights, feel free to ask!",
+      "ratingB": 4,
+      "reason": "ddddddd",
+      "_swapped": true,
+      "durationMs": 14640,
+      "firstViewAtISO": "2025-09-09T23:56:17.492Z",
+      "completedAtISO": "2025-09-09T23:56:32.124Z"
+    }
+  ],
+  "prolific": {
+    "pid": "3559f11f-ed45-4c62-878f-3ac07cf7d9d3",
+    "studyId": "",
+    "sessionId": ""
+  }
+}

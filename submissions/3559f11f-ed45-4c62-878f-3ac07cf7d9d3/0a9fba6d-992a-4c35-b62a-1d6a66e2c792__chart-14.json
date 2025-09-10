@@ -1,0 +1,28 @@
+{
+  "submissionId": "0a9fba6d-992a-4c35-b62a-1d6a66e2c792",
+  "createdAt": "2025-09-09T23:56:17.141Z",
+  "timezone": "America/New_York",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+  "selectedCharts": [
+    14
+  ],
+  "responses": [
+    {
+      "chartId": 14,
+      "insightA": "The scatter plot shows a diverse distribution of movies with a concentration of data points at lower production budgets and grosses. Films with higher production budgets tend to have a broader range of gross outcomes, with some points reaching very high gross values.\n\nThere is an apparent positive trend where movies with larger production budgets generally achieve higher worldwide grosses. Western genre (orange) appears frequently at the top grossing end.\n\nStatistical analysis indicates that the mean production budget is approximately $57.3 million, with a standard deviation of around $42.6 million. The mean worldwide gross is about $165 million, with a standard deviation of $186.8 million. The correlation between production budget and worldwide gross is approximately 0.67, suggesting a moderate positive correlation.\n\nCombining visual inspection and statistical analysis, there is a clear upward trend indicating that larger production budgets typically result in higher worldwide grosses, despite substantial variability. Genres like Western often have higher grosses.\n\nThere is a moderate positive correlation between production budgets and worldwide gross incomes, indicating that investing more in production generally leads to better box office performance, evident across various genres.",
+      "ratingA": 3,
+      "insightB": "The data contains three columns:\n\n- **Production Budget:** The budget allocated for the film's production.\n- **Worldwide Gross:** The total gross revenue the film generated worldwide.\n- **Major Genre:** The film's major genre.\n\n### Insights and Analysis:\n\n1. **Distribution and Correlation:**\n   - **Production Budget vs. Worldwide Gross:** The plot suggests a wide range of production budgets and worldwide grosses, with some high-budget films earning substantial revenue, as indicated by points further right and higher up on the graph.\n   - **Correlation:** There seems to be variability, where higher production budgets don't always ensure higher worldwide gross and vice versa.\n\n2. **Genre Insights:**\n   - **Adventure:** Represented by orange dots, these tend to be spread out at higher production budgets, indicating that Adventure films may have larger budgets.\n   - **Drama and Comedy:** These genres, with pink and light blue dots, appear concentrated towards lower production budgets and gross values.\n   - **Action:** Often situated towards the top-right section, indicating high budget and high gross.\n\n3. **Outliers:**\n   - There are some films with exceptionally high gross (over 1.5G) and varied budgets, which could be high-return films with major success or exceptional demand.\n\nWould you like to dig deeper into any specific genre or relationship between the production budget and worldwide gross?",
+      "ratingB": 4,
+      "reason": "ssss",
+      "_swapped": true,
+      "durationMs": 84320,
+      "firstViewAtISO": "2025-09-09T23:54:52.819Z",
+      "completedAtISO": "2025-09-09T23:56:17.141Z"
+    }
+  ],
+  "prolific": {
+    "pid": "3559f11f-ed45-4c62-878f-3ac07cf7d9d3",
+    "studyId": "",
+    "sessionId": ""
+  }
+}

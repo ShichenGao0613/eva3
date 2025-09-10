@@ -2,44 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Chart Insights Rating (Per-Item Submit)</title>
+    <title>Chart Insights Rating (Per-Item Submit) — Sticky Chart Top</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- React & ReactDOM (UMD) -->
-    <script
-      src="https://unpkg.com/react@18/umd/react.development.js"
-      crossorigin
-    ></script>
-    <script
-      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
-      crossorigin
-    ></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 
     <!-- Emotion (for MUI v5) -->
-    <script
-      src="https://unpkg.com/@emotion/react@11.11.4/dist/emotion-react.umd.min.js"
-      crossorigin
-    ></script>
-    <script
-      src="https://unpkg.com/@emotion/styled@11.11.5/dist/emotion-styled.umd.min.js"
-      crossorigin
-    ></script>
+    <script src="https://unpkg.com/@emotion/react@11.11.4/dist/emotion-react.umd.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@emotion/styled@11.11.5/dist/emotion-styled.umd.min.js" crossorigin></script>
 
     <!-- MUI v5 (UMD) -->
-    <script
-      src="https://unpkg.com/@mui/material@5.15.14/umd/material-ui.development.js"
-      crossorigin
-    ></script>
-    <script
-      src="https://unpkg.com/@mui/icons-material@5.15.14/umd/material-ui-icons.development.js"
-      crossorigin
-    ></script>
+    <script src="https://unpkg.com/@mui/material@5.15.14/umd/material-ui.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@mui/icons-material@5.15.14/umd/material-ui-icons.development.js" crossorigin></script>
 
     <!-- Papa Parse for CSV -->
-    <script
-      src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"
-      crossorigin
-    ></script>
+    <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js" crossorigin></script>
 
     <style>
       html,
@@ -49,12 +28,25 @@
         margin: 0;
       }
 
-      /* Make the chart much smaller & centered */
+      /* Make the chart responsive and cap the height so it doesn't eat the viewport */
       img.chart {
         max-width: 100%;
+        max-height: 45vh; /* keep visible while reading */
         height: auto;
         display: block;
         margin: 0 auto;
+      }
+
+      /* Sticky container for the chart (like the sticky footer, but on top) */
+      .sticky-top {
+        position: sticky;
+        top: 0; /* pin to the top of the viewport */
+        z-index: 20;
+        background: rgba(255, 255, 255, 0.95);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        padding: 8px 8px 12px;
       }
 
       .sticky-footer {
@@ -108,7 +100,9 @@
         const qp = new URLSearchParams(location.search);
 
         const PROLIFIC_PID =
-          qp.get("PROLIFIC_PID") || localStorage.getItem("prolific_pid") ||  crypto.randomUUID();
+          qp.get("PROLIFIC_PID") ||
+          localStorage.getItem("prolific_pid") ||
+          crypto.randomUUID();
         const STUDY_ID =
           qp.get("STUDY_ID") || localStorage.getItem("study_id") || "";
         const SESSION_ID =
@@ -217,13 +211,15 @@
         }
 
         function mdBoldToHtml(s) {
-  if (!s) return "";
-  const escaped = escapeHtml(String(s));
-  return escaped
-    .replace(/(^|\n)\s*#+\s*/g, "$1") 
-    .replace(/\*\*/g, "") 
-    .replace(/\n/g, "<br/>");
-}
+          if (!s) return "";
+          const escaped = escapeHtml(String(s));
+          return escaped
+            .replace(/(^|\n)\s*#+\s*/g, "$1")
+            .replace(/\*\*/g, "")
+            .replace(/^\n+/, "")
+            .replace(/\n/g, "<br/>");
+        }
+
         // Stable child component to avoid remounting (prevents input jumping)
         function CurrentCard({
           items,
@@ -244,13 +240,14 @@
               { item: true, xs: 12, md: 10 },
               h(
                 Card,
-                null,
+                { sx: { overflow: "visible" } }, // allow sticky child inside
                 h(
                   CardContent,
                   null,
+                  // ★★★ STICKY CHART HEADER ★★★
                   h(
                     Box,
-                    { sx: { mb: 2 } },
+                    { className: "sticky-top" },
                     h("img", {
                       className: "chart",
                       src: it.imgUrl,
@@ -261,25 +258,27 @@
                       },
                     })
                   ),
+
                   // Side-by-side layout for Insight A and B
                   h(
                     Grid,
-                    { container: true, spacing: 2, alignItems: "stretch" },
+                    { container: true, spacing: 0, alignItems: "stretch", sx: { mt: 1 } },
                     h(
                       Grid,
                       { item: true, xs: 12, md: 5 },
                       h(
                         Stack,
-                        { spacing: 1 },
-                        h(Typography, { variant: "subtitle2" }, "Insight A"),
-                        // Render **bold** if present (avoids confusion when A/B are swapped)
+                        { spacing: 0 },
+                        h(
+                          Typography,
+                          { variant: "h6", fontWeight: "bold", sx: { mb: 0 } },
+                          "Insight A"
+                        ),
                         h(Typography, {
                           variant: "body2",
-                          sx: { mb: 1, wordBreak: "break-word" },
+                          sx: { wordBreak: "break-word" },
                           color: "text.primary",
-                          dangerouslySetInnerHTML: {
-                            __html: mdBoldToHtml(it.displayA),
-                          },
+                          dangerouslySetInnerHTML: { __html: mdBoldToHtml(it.displayA) },
                         }),
                         h(Rating, {
                           name: `ratingA-${displayNumber}`,
@@ -310,16 +309,17 @@
                       { item: true, xs: 12, md: 5 },
                       h(
                         Stack,
-                        { spacing: 1 },
-                        h(Typography, { variant: "subtitle2" }, "Insight B"),
-
+                        { spacing: 0 },
+                        h(
+                          Typography,
+                          { variant: "h6", fontWeight: "bold", sx: { mb: 0 } },
+                          "Insight B"
+                        ),
                         h(Typography, {
                           variant: "body2",
-                          sx: { mb: 1, wordBreak: "break-word" },
+                          sx: { wordBreak: "break-word" },
                           color: "text.primary",
-                          dangerouslySetInnerHTML: {
-                            __html: mdBoldToHtml(it.displayB),
-                          },
+                          dangerouslySetInnerHTML: { __html: mdBoldToHtml(it.displayB) },
                         }),
                         h(Rating, {
                           name: `ratingB-${displayNumber}`,
@@ -336,6 +336,7 @@
                     { sx: { display: { xs: "block", md: "none" }, my: 1 } },
                     h(Divider, null, h(Chip, { label: "VS" }))
                   ),
+
                   h(
                     Box,
                     { sx: { mt: 2 } },
@@ -351,7 +352,7 @@
                       fullWidth: true,
                       disabled: it.submitted,
                       InputLabelProps: { style: { whiteSpace: "pre-line" } },
-                      required: REQUIRE_REASON, // ★ 新增
+                      required: REQUIRE_REASON,
                       helperText: String(it.reason || "").trim()
                         ? ""
                         : "Please provide a brief reason (required to submit).",
@@ -405,8 +406,7 @@
                               !it.ratingA ||
                               !it.ratingB ||
                               it.submitted ||
-                              (REQUIRE_REASON &&
-                                !String(it.reason || "").trim()),
+                              (REQUIRE_REASON && !String(it.reason || "").trim()),
                           },
                           submitting
                             ? "Submitting..."
@@ -464,16 +464,14 @@
               createTheme({
                 palette: { mode: "light" },
                 shape: { borderRadius: 16 },
-                      typography: {
-        fontSize: 17, 
-      },
+                typography: { fontSize: 17 },
               }),
             []
           );
           const { loading, error, rows } = useInsights();
 
           const [items, setItems] = useState([]);
-          const [currentIndex, setCurrentIndex] = useState(0); // index of the currently displayed chart (1..10 shown to user)
+          const [currentIndex, setCurrentIndex] = useState(0);
 
           const [submitting, setSubmitting] = useState(false);
           const [snackbar, setSnackbar] = useState(null);
@@ -489,14 +487,14 @@
                 copy[currentIndex] = {
                   ...cur,
                   firstOpenPerf: performance.now(),
-                  firstViewAtISO:
-                    cur.firstViewAtISO || new Date().toISOString(),
+                  firstViewAtISO: cur.firstViewAtISO || new Date().toISOString(),
                 };
               }
               return copy;
             });
             prevIndexRef.current = currentIndex;
           }, [currentIndex]);
+
           useEffect(() => {
             if (!loading && !error && items.length) {
               setItems((prev) => {
@@ -513,6 +511,7 @@
               });
             }
           }, [loading, error, items.length]);
+
           // Initialize selection
           useEffect(() => {
             if (!loading && !error && rows.length) {
@@ -533,30 +532,22 @@
                 let displayB = originalB;
                 let swapped = false;
                 if (Math.random() < 0.5) {
-                  // Randomly swap A/B order (hidden from users)
                   [displayA, displayB] = [displayB, displayA];
                   swapped = true;
                 }
 
                 return {
-                  id, // underlying chart id (NOT shown to users)
+                  id,
                   imgUrl: `${CHART_DIR}/${id}.svg`,
-
-                  // store originals for submission mapping
                   originalA,
                   originalB,
-
-                  // what is shown to the user
                   displayA,
                   displayB,
                   swapped,
-
-                  // ratings captured by what the user sees as A/B
                   ratingA: null,
                   ratingB: null,
-                  reason: "", // user free-text reason per chart
-                  submitted: false, // per-item submit state
-
+                  reason: "",
+                  submitted: false,
                   firstOpenPerf: null,
                   firstViewAtISO: null,
                   completedAtISO: null,
@@ -577,11 +568,8 @@
             return Math.round((submittedCount / total) * 100);
           }, [items]);
 
-          // Expose prev for button inside card (so child stays pure)
-          window.appHandlePrev = () =>
-            setCurrentIndex((i) => Math.max(0, i - 1));
+          window.appHandlePrev = () => setCurrentIndex((i) => Math.max(0, i - 1));
 
-          // Rate current item
           function handleRate(field, value) {
             setItems((prev) => {
               const copy = prev.slice();
@@ -591,7 +579,6 @@
             });
           }
 
-          // Reason input for current item
           function handleReason(value) {
             setItems((prev) => {
               const copy = prev.slice();
@@ -602,7 +589,6 @@
           }
 
           function mapRatingsToOriginal(it) {
-            // User rated displayA/displayB. If swapped, displayA==originalB.
             if (!it.swapped) {
               return { ratingA: it.ratingA, ratingB: it.ratingB };
             } else {
@@ -610,24 +596,18 @@
             }
           }
 
-          // Submit only the current item
           async function handleSubmitCurrent() {
             const it = items[currentIndex];
             if (submitting) return;
             if (!it || it.submitted || !it.ratingA || !it.ratingB) return;
 
             if (REQUIRE_REASON && !String(it.reason || "").trim()) {
-              setSnackbar({
-                severity: "warning",
-                msg: "Please fill in the reasoning before submitting.",
-              });
+              setSnackbar({ severity: "warning", msg: "Please fill in the reasoning before submitting." });
               return;
             }
 
             const durationMs =
-              it.firstOpenPerf != null
-                ? Math.round(performance.now() - it.firstOpenPerf)
-                : 0;
+              it.firstOpenPerf != null ? Math.round(performance.now() - it.firstOpenPerf) : 0;
             const completedAtISO = new Date().toISOString();
             const mapped = mapRatingsToOriginal(it);
             const payload = {
@@ -673,7 +653,6 @@
               });
               if (!res.ok) throw new Error(`Submit failed: ${res.status}`);
 
-              // Mark current item as submitted and advance to the next unsubmitted item
               setItems((prev) => {
                 const copy = prev.slice();
                 copy[currentIndex] = {
@@ -687,31 +666,23 @@
 
               setSnackbar({
                 severity: "success",
-                msg: `Item #${currentIndex + 1} submitted in ${(
-                  durationMs / 1000
-                ).toFixed(1)}s.`,
+                msg: `Item #${currentIndex + 1} submitted in ${(durationMs / 1000).toFixed(1)}s.`,
               });
 
               setCurrentIndex((idx) => {
-                const nextIdx = items.findIndex(
-                  (x, i) => i > idx && !x.submitted && i !== idx
-                );
+                const nextIdx = items.findIndex((x, i) => i > idx && !x.submitted && i !== idx);
                 if (nextIdx !== -1) return nextIdx;
                 return Math.min(idx + 1, items.length - 1);
               });
             } catch (e) {
               console.warn(e);
-              setSnackbar({
-                severity: "warning",
-                msg: "Could not reach the server. Please check SUBMIT_URL.",
-              });
+              setSnackbar({ severity: "warning", msg: "Could not reach the server. Please check SUBMIT_URL." });
             } finally {
               setSubmitting(false);
             }
           }
 
-          const allSubmitted =
-            items.length > 0 && items.every((it) => it.submitted);
+          const allSubmitted = items.length > 0 && items.every((it) => it.submitted);
 
           return h(
             ThemeProvider,
@@ -719,7 +690,7 @@
             h(CssBaseline, null),
             h(
               Box,
-              { sx: { width: "100%", px: 2 } }, // slightly narrower overall UI
+              { sx: { width: "100%", px: 2 } },
               h(
                 Stack,
                 { spacing: 2 },
@@ -752,7 +723,7 @@
                       submitting,
                     }),
 
-                    // Bottom controls (sticky at page bottom): Progress only. (Global Submit removed)
+                    // Bottom controls (sticky at page bottom)
                     h(
                       Box,
                       { className: "sticky-footer", sx: { py: 1, mt: 2 } },
@@ -762,19 +733,13 @@
                         h(
                           Box,
                           { sx: { flex: 1 } },
-                          h(LinearProgress, {
-                            variant: "determinate",
-                            value: progress,
-                          }),
+                          h(LinearProgress, { variant: "determinate", value: progress }),
                           h(
                             Typography,
                             { variant: "caption", color: "text.secondary" },
-                            allSubmitted
-                              ? "All items submitted — thank you!"
-                              : `${progress}% complete`
+                            allSubmitted ? "All items submitted — thank you!" : `${progress}% complete`
                           )
                         ),
-                        // NOTE: Removed the old global Submit button as requested.
                         allSubmitted
                           ? h(
                               Button,
@@ -800,12 +765,7 @@
                   onClose: () => setSnackbar(null),
                   anchorOrigin: { vertical: "bottom", horizontal: "center" },
                 },
-                snackbar &&
-                  h(
-                    Alert,
-                    { severity: snackbar.severity, variant: "filled" },
-                    snackbar.msg
-                  )
+                snackbar && h(Alert, { severity: snackbar.severity, variant: "filled" }, snackbar.msg)
               )
             )
           );
